@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Админка блоков сайта</title>
+<script src="/public/js/block-manager.js"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+<style>
+    body { margin: 0; font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; background: #070707; color: #EEE; }
+    .page-card { background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.08); border-radius: 18px; padding: 20px; margin-bottom: 20px; }
+    .section-title { font-size: 1.1rem; font-weight: 700; margin: 0 0 12px; }
+    .block-row { display: grid; grid-template-columns: 1fr auto; gap: 12px; align-items: center; padding: 12px 0; border-bottom: 1px solid rgba(255,255,255,0.08); }
+    .block-row:last-child { border-bottom: none; }
+    .block-name { font-size: 0.98rem; color: #F3F3F3; }
+    .block-id { font-size: 0.78rem; color: #A9A9A9; }
+    .block-controls { display: flex; gap: 10px; }
+    .btn { border: none; border-radius: 12px; cursor: pointer; padding: 10px 16px; font-weight: 700; transition: transform .16s ease; }
+    .btn:hover { transform: translateY(-1px); }
+    .btn-toggle { background: #1F1F1F; color: #F7F7F7; }
+    .btn-hide { background: #DB4444; color: #FFF; }
+    .btn-show { background: #43B581; color: #FFF; }
+    .btn-reset { background: #F0AE00; color: #111; }
+    .status { display: inline-flex; align-items: center; gap: 6px; font-size: 0.86rem; color: #B4B4B4; }
+    .status span { display: inline-block; width: 10px; height: 10px; border-radius: 999px; background: #888; }
+    .status.visible span { background: #43B581; }
+    .status.hidden span { background: #DB4444; }
+    .topbar { display: flex; flex-wrap: wrap; gap: 12px; justify-content: space-between; align-items: center; margin-bottom: 24px; }
+    .topbar h1 { margin: 0; font-size: 1.5rem; }
+    .topbar small { color: #AAA; }
+    .footer { margin-top: 28px; font-size: 0.82rem; color: #888; }
+</style>
+</head>
+<body>
+    <div class="page-card">
+        <div class="topbar">
+            <div>
+                <h1>Управление блоками</h1>
+                <small>Выберите страницу и скрывайте/показывайте секции сайта локально.</small>
+            </div>
+            <button id="resetAll" class="btn btn-reset">Сбросить всё</button>
+        </div>
+        <div style="display:flex; gap:16px; flex-wrap:wrap; margin-bottom:18px;">
+            <label style="display:flex; gap: 8px; align-items:center;">
+                <span>Страница</span>
+                <select id="pageSelect" style="background:#111; color:#fff; border:1px solid rgba(255,255,255,0.12); border-radius:12px; padding:10px 12px; min-width:220px;"></select>
+            </label>
+            <button id="loadBlocks" class="btn btn-show">Загрузить блоки</button>
+        </div>
+        <div id="blocksList"></div>
+        <div class="footer">Все изменения сохраняются в localStorage. Страница не изменяет серверные файлы.</div>
+    </div>
+
+<script>
+    const pages = [
+        '/public/main/m/index.html',
+        '/public/about/m/index.html',
+        '/public/games/m/index.html',
+        '/public/team/m/index.html',
+        '/public/partners/m/index.html'
+    ];
+
+    const pageSelect = document.getElementById('pageSelect');
+    const loadBlocks = document.getElementById('loadBlocks');
+    const blocksList = document.getElementById('blocksList');
+    const resetAll = document.getElementById('resetAll');
+
+    pages.forEach(page => {
+        const option = document.createElement('option');
+        option.value = page;
+        option.textContent = page.replace('/public/', '');
+        pageSelect.append(option);
+    });
+
+    function createRow(blockId, visible, page) {
+        const row = document.createElement('div');
+        row.className = 'block-row';
+
+        const label = document.createElement('div');
+        label.innerHTML = `<div class="block-name">${blockId}</div><div class="block-id">data-block-id="${blockId}"</div>`;
+
+        const controls = document.createElement('div');
+        controls.className = 'block-controls';
+
+        const state = document.createElement('span');
+        state.className = `status ${visible ? 'visible' : 'hidden'}`;
+        state.innerHTML = `<span></span>${visible ? 'Показан' : 'Скрыт'}`;
+
+        const btnToggle = document.createElement('button');
+        btnToggle.className = 'btn btn-toggle';
+        btnToggle.textContent = visible ? 'Скрыть' : 'Показать';
+        btnToggle.addEventListener('click', () => {
+            const nextVisible = !visible;
+            BlockManager.setBlockState(page, blockId, nextVisible);
+            visible = nextVisible;
+            state.className = `status ${visible ? 'visible' : 'hidden'}`;
+            state.innerHTML = `<span></span>${visible ? 'Показан' : 'Скрыт'}`;
+            btnToggle.textContent = visible ? 'Скрыть' : 'Показать';
+        });
+
+        const btnReset = document.createElement('button');
+        btnReset.className = 'btn btn-reset';
+        btnReset.textContent = 'Сброс';
+        btnReset.addEventListener('click', () => {
+            BlockManager.setBlockState(page, blockId, null);
+            visible = true;
+            state.className = 'status visible';
+            state.innerHTML = `<span></span>Показан`;
+            btnToggle.textContent = 'Скрыть';
+        });
+
+        controls.append(state, btnToggle, btnReset);
+        row.append(label, controls);
+
+        return row;
+    }
+
+    async function loadPageBlocks() {
+        blocksList.innerHTML = '<div>Загружаю страницу...</div>';
+        const page = pageSelect.value;
+        try {
+            const response = await fetch(page, {cache: 'no-store'});
+            if (!response.ok) {
+                throw new Error('Ошибка загрузки страницы');
+            }
+            const text = await response.text();
+            const parser = new DOMParser();
+            const doc = parser.parseFromString(text, 'text/html');
+            const nodes = Array.from(doc.querySelectorAll('[data-block-id]'));
+
+            blocksList.innerHTML = '';
+            if (!nodes.length) {
+                blocksList.innerHTML = '<div>На этой странице не найдено элементов с data-block-id.</div>';
+                return;
+            }
+
+            nodes.forEach(node => {
+                const blockId = node.dataset.blockId;
+                const state = BlockManager.getBlockState(page, blockId);
+                const visible = state !== '0';
+                blocksList.append(createRow(blockId, visible, page));
+            });
+        } catch (error) {
+            blocksList.innerHTML = `<div>Ошибка: ${error.message}</div>`;
+        }
+    }
+
+    loadBlocks.addEventListener('click', loadPageBlocks);
+    resetAll.addEventListener('click', () => {
+        if (!confirm('Сбросить все пользовательские настройки блоков?')) return;
+        pages.forEach(page => BlockManager.resetPageBlocks(page));
+        loadPageBlocks();
+    });
+    loadPageBlocks();
+</script>
+</body>
+</html>

@@ -1,0 +1,838 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>Игры - СайтСотика | Дмитрий Передний</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;500;600;700;800&family=Playfair+Display:wght@700;800;900&display=swap" rel="stylesheet">
+<style>
+    :root {
+        --gold: #D4AF37;
+        --gold-light: #F0D571;
+        --gold-dark: #B8941F;
+        --gold-accent: #FFD700;
+        --black: #0A0A0A;
+        --black-rich: #151515;
+        --black-soft: #1F1F1F;
+    }
+    
+    * {
+        -webkit-tap-highlight-color: transparent;
+    }
+    
+    html {
+        scroll-behavior: smooth;
+    }
+    
+    body {
+        font-family: 'Manrope', sans-serif;
+        background: var(--black);
+        color: #E5E5E5;
+        overflow-x: hidden;
+        width: 100%;
+        max-width: 100vw;
+    }
+    
+    h1, h2, h3, h4 {
+        font-family: 'Playfair Display', serif;
+    }
+    
+    .gold-gradient {
+        background: linear-gradient(135deg, #D4AF37 0%, #F0D571 50%, #B8941F 100%);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+    }
+    
+    .gold-border-gradient {
+        position: relative;
+        border: 1px solid transparent;
+        background: linear-gradient(var(--black-rich), var(--black-rich)) padding-box,
+                    linear-gradient(135deg, #D4AF37, #F0D571, #B8941F) border-box;
+    }
+    
+    .gold-border-gradient:active {
+        transform: scale(0.98);
+    }
+    
+    .glass-effect {
+        background: rgba(21, 21, 21, 0.85);
+        backdrop-filter: blur(20px);
+        -webkit-backdrop-filter: blur(20px);
+        border: 1px solid rgba(212, 175, 55, 0.15);
+    }
+    
+    .rich-card {
+        background: linear-gradient(145deg, #151515 0%, #1A1A1A 100%);
+        border: 1px solid rgba(212, 175, 55, 0.2);
+        box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.05);
+    }
+    
+    .rich-card:active {
+        background: linear-gradient(145deg, #1A1A1A 0%, #1F1F1F 100%);
+        border-color: rgba(212, 175, 55, 0.4);
+    }
+    
+    .series-tab {
+        min-height: 44px;
+        white-space: nowrap;
+        transition: all 0.3s ease;
+    }
+    
+    .series-tab:active {
+        transform: scale(0.95);
+    }
+    
+    .series-tab.active {
+        background: linear-gradient(135deg, #D4AF37 0%, #B8941F 100%);
+        color: var(--black);
+        font-weight: 700;
+    }
+    
+    .burger-line {
+        transition: all 0.3s ease;
+    }
+    
+    .burger-open .burger-line:nth-child(1) {
+        transform: rotate(45deg) translateY(8px);
+    }
+    
+    .burger-open .burger-line:nth-child(2) {
+        opacity: 0;
+    }
+    
+    .burger-open .burger-line:nth-child(3) {
+        transform: rotate(-45deg) translateY(-8px);
+    }
+    
+    .mobile-menu {
+        transform: translateX(100%);
+        transition: transform 0.3s ease;
+    }
+    
+    .mobile-menu.active {
+        transform: translateX(0);
+    }
+    
+    .scroll-hidden::-webkit-scrollbar {
+        display: none;
+    }
+    
+    .scroll-hidden {
+        -ms-overflow-style: none;
+        scrollbar-width: none;
+    }
+    
+    .track-badge {
+        background: rgba(212, 175, 55, 0.1);
+        border: 1px solid rgba(212, 175, 55, 0.3);
+    }
+    
+    .gold-divider {
+        height: 1px;
+        background: linear-gradient(90deg, transparent, #D4AF37, transparent);
+    }
+    
+    @keyframes fadeInUp {
+        from {
+            opacity: 0;
+            transform: translateY(20px);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+    
+    .animate-fade-in {
+        animation: fadeInUp 0.6s ease forwards;
+    }
+</style>
+</head>
+<body>
+<!-- Mobile Navigation -->
+<header class="fixed top-0 left-0 right-0 z-50 glass-effect">
+    <div class="px-4 py-4">
+        <div class="flex items-center justify-between">
+            <a href="/public/main/" class="flex items-center gap-2">
+                <div class="w-10 h-10 rounded-lg gold-border-gradient flex items-center justify-center">
+                    <i class="fas fa-flag-checkered text-xl" style="color: var(--gold);"></i>
+                </div>
+                <div>
+                    <div class="text-sm font-bold gold-gradient" data-shared-brand></div>
+                    <div class="text-[10px] text-gray-400" data-shared-author></div>
+                </div>
+            </a>
+            <button id="burgerBtn" class="w-11 h-11 flex flex-col items-center justify-center gap-1.5 rounded-lg gold-border-gradient">
+                <span class="burger-line w-6 h-0.5 bg-gradient-to-r from-[#D4AF37] to-[#F0D571]"></span>
+                <span class="burger-line w-6 h-0.5 bg-gradient-to-r from-[#D4AF37] to-[#F0D571]"></span>
+                <span class="burger-line w-6 h-0.5 bg-gradient-to-r from-[#D4AF37] to-[#F0D571]"></span>
+            </button>
+        </div>
+    </div>
+</header>
+
+<!-- Slide-in Mobile Menu -->
+<div id="mobileMenu" class="mobile-menu fixed top-0 right-0 bottom-0 w-4/5 max-w-sm z-50 glass-effect">
+    <div class="p-6">
+        <div class="flex justify-between items-center mb-8">
+            <div class="text-xl font-bold gold-gradient">Меню</div>
+            <button id="closeMenu" class="w-10 h-10 flex items-center justify-center rounded-lg gold-border-gradient">
+                <i class="fas fa-times text-lg" style="color: var(--gold);"></i>
+            </button>
+        </div>
+        <nav class="flex flex-col gap-3">
+            <a href="/public/main/" class="px-4 py-3.5 rounded-lg rich-card text-base font-medium">
+                <i class="fas fa-home mr-3" style="color: var(--gold);"></i>Главная
+            </a>
+            <a href="/public/about/" class="px-4 py-3.5 rounded-lg rich-card text-base font-medium">
+                <i class="fas fa-user mr-3" style="color: var(--gold);"></i>О канале
+            </a>
+            <a href="/public/games/" class="px-4 py-3.5 rounded-lg text-base font-bold" style="background: linear-gradient(135deg, #D4AF37 0%, #B8941F 100%); color: var(--black);">
+                <i class="fas fa-gamepad mr-3"></i>Игры
+            </a>
+            <a href="/public/team/" class="px-4 py-3.5 rounded-lg rich-card text-base font-medium">
+                <i class="fas fa-users mr-3" style="color: var(--gold);"></i>Команда
+            </a>
+            <a href="/public/partners/" class="px-4 py-3.5 rounded-lg rich-card text-base font-medium">
+                <i class="fas fa-handshake mr-3" style="color: var(--gold);"></i>Партнеры
+            </a>
+        </nav>
+        <div class="gold-divider my-8"></div>
+        <div class="flex gap-4">
+            <a href="#" class="w-11 h-11 flex items-center justify-center rounded-lg gold-border-gradient">
+                <i class="fab fa-youtube text-xl" style="color: var(--gold);"></i>
+            </a>
+            <a href="#" class="w-11 h-11 flex items-center justify-center rounded-lg gold-border-gradient">
+                <i class="fab fa-twitch text-xl" style="color: var(--gold);"></i>
+            </a>
+            <a href="#" class="w-11 h-11 flex items-center justify-center rounded-lg gold-border-gradient">
+                <i class="fab fa-telegram text-xl" style="color: var(--gold);"></i>
+            </a>
+        </div>
+    </div>
+</div>
+
+<!-- Overlay -->
+<div id="overlay" class="fixed inset-0 bg-black bg-opacity-70 z-40 hidden"></div>
+
+<main class="pt-20 pb-12">
+    <!-- Hero Section -->
+    <section class="px-4 py-8 relative overflow-hidden">
+        <div class="absolute top-0 left-1/2 -translate-x-1/2 w-96 h-96 bg-gradient-to-b from-[#D4AF37] to-transparent opacity-10 blur-3xl"></div>
+        <div class="relative z-10 text-center animate-fade-in">
+            <h1 class="text-4xl font-black mb-3 leading-tight">
+                <span class="gold-gradient">Гоночная</span><br>
+                <span class="text-white">Коллекция</span>
+            </h1>
+            <p class="text-sm text-gray-400 mb-6 leading-relaxed">
+                Подробные разборы по всем симуляторам. Сетапы, трассы, тайм-атаки и онлайн заезды от профи.
+            </p>
+            
+            <!-- Stats -->
+            <div class="grid grid-cols-3 gap-3 mb-8">
+                <div class="rich-card rounded-xl p-4">
+                    <div class="text-2xl font-bold gold-gradient mb-1">6</div>
+                    <div class="text-[11px] text-gray-400">игр</div>
+                </div>
+                <div class="rich-card rounded-xl p-4">
+                    <div class="text-2xl font-bold gold-gradient mb-1">847</div>
+                    <div class="text-[11px] text-gray-400">часов</div>
+                </div>
+                <div class="rich-card rounded-xl p-4">
+                    <div class="text-2xl font-bold gold-gradient mb-1">120+</div>
+                    <div class="text-[11px] text-gray-400">трасс</div>
+                </div>
+            <div class="rich-card rounded-xl p-4 mx-auto max-w-xs">
+                <div class="text-2xl font-bold gold-gradient mb-1">500+</div>
+                <div class="text-xs text-gray-400">авто в коллекции</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Series Tabs -->
+    <section class="px-4 mb-8 sticky top-16 z-30 bg-[var(--black)] py-3">
+        <div class="flex gap-2 overflow-x-auto scroll-hidden pb-1">
+            <button class="series-tab active px-5 rounded-full text-sm gold-border-gradient" data-series="forza">
+                Forza Motorsport
+            </button>
+            <button class="series-tab px-5 rounded-full text-sm gold-border-gradient" data-series="assetto">
+                Assetto Corsa
+            </button>
+            <button class="series-tab px-5 rounded-full text-sm gold-border-gradient" data-series="project">
+                Project CARS
+            </button>
+        </div>
+    </section>
+
+    <!-- Forza Motorsport Section -->
+    <section id="forza" class="series-content px-4 space-y-5 mb-12">
+        <div class="flex items-center gap-3 mb-6">
+            <div class="w-12 h-12 rounded-xl flex items-center justify-center" style="background: linear-gradient(135deg, #D4AF37 0%, #B8941F 100%);">
+                <i class="fas fa-trophy text-black text-xl"></i>
+            </div>
+            <div>
+                <h2 class="text-2xl font-bold gold-gradient">Forza Motorsport</h2>
+                <p class="text-xs text-gray-400">Флагманская серия Xbox</p>
+            </div>
+        </div>
+
+        <!-- Forza 2023 -->
+        <div class="rich-card rounded-2xl overflow-hidden">
+            <img src="/public/images/forza2023.png" alt="Forza Motorsport 2023" class="w-full h-48 object-cover">
+            <div class="p-5">
+                <div class="flex items-center justify-between mb-3">
+                    <h3 class="text-xl font-bold text-white">Forza Motorsport 2023</h3>
+                    <span class="text-[10px] px-3 py-1 rounded-full" style="background: rgba(212, 175, 55, 0.2); color: var(--gold);">Новинка</span>
+                </div>
+                <p class="text-sm text-gray-400 mb-4 leading-relaxed">
+                    Революционная графика, 500+ автомобилей, динамическая погода и трассировка лучей. Полный разбор физики и настроек.
+                </p>
+                
+                <div class="gold-divider my-4"></div>
+                
+                <div class="mb-4">
+                    <div class="text-xs font-semibold mb-2" style="color: var(--gold);">
+                        <i class="fas fa-road mr-1"></i> Топовые трассы
+                    </div>
+                    <div class="flex flex-wrap gap-2">
+                        <span class="track-badge text-[11px] px-3 py-1.5 rounded-lg">Nürburgring Nordschleife</span>
+                        <span class="track-badge text-[11px] px-3 py-1.5 rounded-lg">Spa-Francorchamps</span>
+                        <span class="track-badge text-[11px] px-3 py-1.5 rounded-lg">Laguna Seca</span>
+                        <span class="track-badge text-[11px] px-3 py-1.5 rounded-lg">Silverstone</span>
+                    </div>
+                </div>
+                
+                <div class="mb-4">
+                    <div class="text-xs font-semibold mb-2" style="color: var(--gold);">
+                        <i class="fas fa-car mr-1"></i> Любимые авто
+                    </div>
+                    <div class="text-sm text-gray-300 space-y-1">
+                        <div>• Porsche 911 GT3 RS (992)</div>
+                        <div>• McLaren Senna</div>
+                        <div>• Ferrari 488 GTB</div>
+                    </div>
+                </div>
+                
+                <div class="rounded-lg p-3" style="background: rgba(212, 175, 55, 0.05);">
+                    <div class="text-xs font-semibold mb-1" style="color: var(--gold);">
+                        <i class="fas fa-wrench mr-1"></i> Сетап-совет
+                    </div>
+                    <p class="text-xs text-gray-400 leading-relaxed">
+                        Для Nordschleife снижаем давление в шинах на 0.2 бар и смягчаем подвеску для лучшего сцепления в поворотах.
+                    </p>
+                </div>
+                
+                <div class="flex items-center justify-between mt-4 pt-4 border-t border-gray-800">
+                    <div class="text-xs text-gray-500">
+                        <i class="fas fa-clock mr-1"></i> Лучшее время: 6:48.321
+                    </div>
+                    <div class="text-xs text-gray-500">
+                        <i class="fas fa-calendar mr-1"></i> Стрим: <span data-shared-timing></span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Forza 7 -->
+        <div class="rich-card rounded-2xl overflow-hidden">
+            <img src="/public/images/forza7.png" alt="Forza Motorsport 7" class="w-full h-48 object-cover">
+            <div class="p-5">
+                <h3 class="text-xl font-bold text-white mb-3">Forza Motorsport 7</h3>
+                <p class="text-sm text-gray-400 mb-4 leading-relaxed">
+                    Классика жанра. 700+ автомобилей, 30 локаций, динамическая погода. Эталон аркадного симулятора.
+                </p>
+                
+                <div class="gold-divider my-4"></div>
+                
+                <div class="mb-4">
+                    <div class="text-xs font-semibold mb-2" style="color: var(--gold);">
+                        <i class="fas fa-road mr-1"></i> Культовые трассы
+                    </div>
+                    <div class="flex flex-wrap gap-2">
+                        <span class="track-badge text-[11px] px-3 py-1.5 rounded-lg">Bathurst</span>
+                        <span class="track-badge text-[11px] px-3 py-1.5 rounded-lg">Suzuka</span>
+                        <span class="track-badge text-[11px] px-3 py-1.5 rounded-lg">Brands Hatch</span>
+                        <span class="track-badge text-[11px] px-3 py-1.5 rounded-lg">Road America</span>
+                    </div>
+                </div>
+                
+                <div class="mb-4">
+                    <div class="text-xs font-semibold mb-2" style="color: var(--gold);">
+                        <i class="fas fa-car mr-1"></i> Легенды гаража
+                    </div>
+                    <div class="text-sm text-gray-300 space-y-1">
+                        <div>• Nissan GT-R R35 Nismo</div>
+                        <div>• Lamborghini Huracán Performante</div>
+                        <div>• BMW M4 GTS</div>
+                    </div>
+                </div>
+                
+                <div class="rounded-lg p-3" style="background: rgba(212, 175, 55, 0.05);">
+                    <div class="text-xs font-semibold mb-1" style="color: var(--gold);">
+                        <i class="fas fa-wrench mr-1"></i> Сетап-совет
+                    </div>
+                    <p class="text-xs text-gray-400 leading-relaxed">
+                        На Bathurst увеличиваем развал до -2.5° на передней оси для компенсации нагрузки в быстрых поворотах горы.
+                    </p>
+                </div>
+                
+                <div class="flex items-center justify-between mt-4 pt-4 border-t border-gray-800">
+                    <div class="text-xs text-gray-500">
+                        <i class="fas fa-clock mr-1"></i> Лучшее время: 2:03.147
+                    </div>
+                    <div class="text-xs text-gray-500">
+                        <i class="fas fa-calendar mr-1"></i> Стрим: Вт, Чт 19:00
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Assetto Corsa Section -->
+    <section id="assetto" class="series-content px-4 space-y-5 mb-12 hidden">
+        <div class="flex items-center gap-3 mb-6">
+            <div class="w-12 h-12 rounded-xl flex items-center justify-center" style="background: linear-gradient(135deg, #D4AF37 0%, #B8941F 100%);">
+                <i class="fas fa-steering-wheel text-black text-xl"></i>
+            </div>
+            <div>
+                <h2 class="text-2xl font-bold gold-gradient">Assetto Corsa</h2>
+                <p class="text-xs text-gray-400">Хардкорный симулятор</p>
+            </div>
+        </div>
+
+        <!-- ACC -->
+        <div class="rich-card rounded-2xl overflow-hidden">
+            <img src="/public/images/acc.png" alt="Assetto Corsa Competizione" class="w-full h-48 object-cover">
+            <div class="p-5">
+                <div class="flex items-center justify-between mb-3">
+                    <h3 class="text-xl font-bold text-white">ACC Competizione</h3>
+                    <span class="text-[10px] px-3 py-1 rounded-full" style="background: rgba(212, 175, 55, 0.2); color: var(--gold);">Pro</span>
+                </div>
+                <p class="text-sm text-gray-400 mb-4 leading-relaxed">
+                    Официальный симулятор GT World Challenge. Реалистичная физика GT3, динамическая погода, день/ночь цикл.
+                </p>
+                
+                <div class="gold-divider my-4"></div>
+                
+                <div class="mb-4">
+                    <div class="text-xs font-semibold mb-2" style="color: var(--gold);">
+                        <i class="fas fa-road mr-1"></i> GT трассы
+                    </div>
+                    <div class="flex flex-wrap gap-2">
+                        <span class="track-badge text-[11px] px-3 py-1.5 rounded-lg">Monza</span>
+                        <span class="track-badge text-[11px] px-3 py-1.5 rounded-lg">Imola</span>
+                        <span class="track-badge text-[11px] px-3 py-1.5 rounded-lg">Kyalami</span>
+                        <span class="track-badge text-[11px] px-3 py-1.5 rounded-lg">Mount Panorama</span>
+                    </div>
+                </div>
+                
+                <div class="mb-4">
+                    <div class="text-xs font-semibold mb-2" style="color: var(--gold);">
+                        <i class="fas fa-car mr-1"></i> GT3 болиды
+                    </div>
+                    <div class="text-sm text-gray-300 space-y-1">
+                        <div>• Porsche 911 GT3 R</div>
+                        <div>• Aston Martin Vantage GT3</div>
+                        <div>• Mercedes-AMG GT3 Evo</div>
+                    </div>
+                </div>
+                
+                <div class="rounded-lg p-3" style="background: rgba(212, 175, 55, 0.05);">
+                    <div class="text-xs font-semibold mb-1" style="color: var(--gold);">
+                        <i class="fas fa-wrench mr-1"></i> Сетап-совет
+                    </div>
+                    <p class="text-xs text-gray-400 leading-relaxed">
+                        Для Monza снижаем прижимную силу до минимума и удлиняем передачи для максимальной скорости на прямых.
+                    </p>
+                </div>
+                
+                <div class="flex items-center justify-between mt-4 pt-4 border-t border-gray-800">
+                    <div class="text-xs text-gray-500">
+                        <i class="fas fa-clock mr-1"></i> Лучшее время: 1:47.892
+                    </div>
+                    <div class="text-xs text-gray-500">
+                        <i class="fas fa-calendar mr-1"></i> Стрим: Сб, Вс 18:00
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- AC -->
+        <div class="rich-card rounded-2xl overflow-hidden">
+            <img src="/public/images/ac.png" alt="Assetto Corsa" class="w-full h-48 object-cover">
+            <div class="p-5">
+                <h3 class="text-xl font-bold text-white mb-3">Assetto Corsa</h3>
+                <p class="text-sm text-gray-400 mb-4 leading-relaxed">
+                    Легендарный симулятор с лучшим модс-сообществом. Тысячи трасс и авто от комьюнити. Максимальная реалистичность.
+                </p>
+                
+                <div class="gold-divider my-4"></div>
+                
+                <div class="mb-4">
+                    <div class="text-xs font-semibold mb-2" style="color: var(--gold);">
+                        <i class="fas fa-road mr-1"></i> Модовые трассы
+                    </div>
+                    <div class="flex flex-wrap gap-2">
+                        <span class="track-badge text-[11px] px-3 py-1.5 rounded-lg">LA Canyons</span>
+                        <span class="track-badge text-[11px] px-3 py-1.5 rounded-lg">Shutoko</span>
+                        <span class="track-badge text-[11px] px-3 py-1.5 rounded-lg">Targa Florio</span>
+                        <span class="track-badge text-[11px] px-3 py-1.5 rounded-lg">Nordschleife</span>
+                    </div>
+                </div>
+                
+                <div class="mb-4">
+                    <div class="text-xs font-semibold mb-2" style="color: var(--gold);">
+                        <i class="fas fa-car mr-1"></i> Классика
+                    </div>
+                    <div class="text-sm text-gray-300 space-y-1">
+                        <div>• Mazda MX-5 NA Cup</div>
+                        <div>• Lotus 49</div>
+                        <div>• Ferrari 312T</div>
+                    </div>
+                </div>
+                
+                <div class="rounded-lg p-3" style="background: rgba(212, 175, 55, 0.05);">
+                    <div class="text-xs font-semibold mb-1" style="color: var(--gold);">
+                        <i class="fas fa-wrench mr-1"></i> Сетап-совет
+                    </div>
+                    <p class="text-xs text-gray-400 leading-relaxed">
+                        Для Shutoko используем мягкие шины и короткую главную пару для быстрого разгона между трафиком.
+                    </p>
+                </div>
+                
+                <div class="flex items-center justify-between mt-4 pt-4 border-t border-gray-800">
+                    <div class="text-xs text-gray-500">
+                        <i class="fas fa-clock mr-1"></i> Лучшее время: 7:12.045
+                    </div>
+                    <div class="text-xs text-gray-500">
+                        <i class="fas fa-calendar mr-1"></i> Стрим: Ср 21:00
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Project CARS Section -->
+    <section id="project" class="series-content px-4 space-y-5 mb-12 hidden">
+        <div class="flex items-center gap-3 mb-6">
+            <div class="w-12 h-12 rounded-xl flex items-center justify-center" style="background: linear-gradient(135deg, #D4AF37 0%, #B8941F 100%);">
+                <i class="fas fa-flag-checkered text-black text-xl"></i>
+            </div>
+            <div>
+                <h2 class="text-2xl font-bold gold-gradient">Project CARS</h2>
+                <p class="text-xs text-gray-400">Гоночная карьера</p>
+            </div>
+        </div>
+
+        <!-- PC2 -->
+        <div class="rich-card rounded-2xl overflow-hidden">
+            <img src="/public/images/pc2.png" alt="Project CARS 2" class="w-full h-48 object-cover">
+            <div class="p-5">
+                <div class="flex items-center justify-between mb-3">
+                    <h3 class="text-xl font-bold text-white">Project CARS 2</h3>
+                    <span class="text-[10px] px-3 py-1 rounded-full" style="background: rgba(212, 175, 55, 0.2); color: var(--gold);">Топ</span>
+                </div>
+                <p class="text-sm text-gray-400 mb-4 leading-relaxed">
+                    Лучшая в серии. Динамическая погода LiveTrack 3.0, 180+ авто, карьерный режим от картинга до LMP1.
+                </p>
+                
+                <div class="gold-divider my-4"></div>
+                
+                <div class="mb-4">
+                    <div class="text-xs font-semibold mb-2" style="color: var(--gold);">
+                        <i class="fas fa-road mr-1"></i> Разнообразие трасс
+                    </div>
+                    <div class="flex flex-wrap gap-2">
+                        <span class="track-badge text-[11px] px-3 py-1.5 rounded-lg">Le Mans</span>
+                        <span class="track-badge text-[11px] px-3 py-1.5 rounded-lg">Daytona</span>
+                        <span class="track-badge text-[11px] px-3 py-1.5 rounded-lg">Azure Coast</span>
+                        <span class="track-badge text-[11px] px-3 py-1.5 rounded-lg">Dubai Autodrome</span>
+                    </div>
+                </div>
+                
+                <div class="mb-4">
+                    <div class="text-xs font-semibold mb-2" style="color: var(--gold);">
+                        <i class="fas fa-car mr-1"></i> Разные классы
+                    </div>
+                    <div class="text-sm text-gray-300 space-y-1">
+                        <div>• LMP1 Toyota TS050 Hybrid</div>
+                        <div>• IndyCar Dallara DW12</div>
+                        <div>• GTE Ferrari 488 GTE</div>
+                    </div>
+                </div>
+                
+                <div class="rounded-lg p-3" style="background: rgba(212, 175, 55, 0.05);">
+                    <div class="text-xs font-semibold mb-1" style="color: var(--gold);">
+                        <i class="fas fa-wrench mr-1"></i> Сетап-совет
+                    </div>
+                    <p class="text-xs text-gray-400 leading-relaxed">
+                        Для Le Mans в дождь увеличиваем клиренс и смягчаем стабилизаторы для лучшей проходимости по лужам.
+                    </p>
+                </div>
+                
+                <div class="flex items-center justify-between mt-4 pt-4 border-t border-gray-800">
+                    <div class="text-xs text-gray-500">
+                        <i class="fas fa-clock mr-1"></i> Лучшее время: 3:14.791
+                    </div>
+                    <div class="text-xs text-gray-500">
+                        <i class="fas fa-calendar mr-1"></i> Стрим: Пт 20:00
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- PC3 -->
+        <div class="rich-card rounded-2xl overflow-hidden">
+            <img src="/public/images/pc3.png" alt="Project CARS 3" class="w-full h-48 object-cover">
+            <div class="p-5">
+                <h3 class="text-xl font-bold text-white mb-3">Project CARS 3</h3>
+                <p class="text-sm text-gray-400 mb-4 leading-relaxed">
+                    Аркадный спин-офф серии. Система прокачки авто, кастомизация, более доступный геймплей для новичков.
+                </p>
+                
+                <div class="gold-divider my-4"></div>
+                
+                <div class="mb-4">
+                    <div class="text-xs font-semibold mb-2" style="color: var(--gold);">
+                        <i class="fas fa-road mr-1"></i> Городские трассы
+                    </div>
+                    <div class="flex flex-wrap gap-2">
+                        <span class="track-badge text-[11px] px-3 py-1.5 rounded-lg">Shanghai</span>
+                        <span class="track-badge text-[11px] px-3 py-1.5 rounded-lg">Barcelona</span>
+                        <span class="track-badge text-[11px] px-3 py-1.5 rounded-lg">Havana</span>
+                        <span class="track-badge text-[11px] px-3 py-1.5 rounded-lg">Knockhill</span>
+                    </div>
+                </div>
+                
+                <div class="mb-4">
+                    <div class="text-xs font-semibold mb-2" style="color: var(--gold);">
+                        <i class="fas fa-car mr-1"></i> Тюнинг
+                    </div>
+                    <div class="text-sm text-gray-300 space-y-1">
+                        <div>• Mitsubishi Lancer Evo X</div>
+                        <div>• Nissan 370Z</div>
+                        <div>• Honda Civic Type R</div>
+                    </div>
+                </div>
+                
+                <div class="rounded-lg p-3" style="background: rgba(212, 175, 55, 0.05);">
+                    <div class="text-xs font-semibold mb-1" style="color: var(--gold);">
+                        <i class="fas fa-wrench mr-1"></i> Сетап-совет
+                    </div>
+                    <p class="text-xs text-gray-400 leading-relaxed">
+                        Максимум на прижимную силу для городских трасс с медленными поворотами. Турбину ставим на быстрый спул.
+                    </p>
+                </div>
+                
+                <div class="flex items-center justify-between mt-4 pt-4 border-t border-gray-800">
+                    <div class="text-xs text-gray-500">
+                        <i class="fas fa-clock mr-1"></i> Лучшее время: 1:38.224
+                    </div>
+                    <div class="text-xs text-gray-500">
+                        <i class="fas fa-calendar mr-1"></i> Стрим: По выходным
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- PC1 -->
+        <div class="rich-card rounded-2xl overflow-hidden">
+            <img src="/public/images/pc1.png" alt="Project CARS" class="w-full h-48 object-cover">
+            <div class="p-5">
+                <h3 class="text-xl font-bold text-white mb-3">Project CARS</h3>
+                <p class="text-sm text-gray-400 mb-4 leading-relaxed">
+                    Начало легенды. Краудфандинг проект, который изменил жанр. Революционная погода и физика для своего времени.
+                </p>
+                
+                <div class="gold-divider my-4"></div>
+                
+                <div class="mb-4">
+                    <div class="text-xs font-semibold mb-2" style="color: var(--gold);">
+                        <i class="fas fa-road mr-1"></i> Классические трассы
+                    </div>
+                    <div class="flex flex-wrap gap-2">
+                        <span class="track-badge text-[11px] px-3 py-1.5 rounded-lg">Le Mans Historic</span>
+                        <span class="track-badge text-[11px] px-3 py-1.5 rounded-lg">Hockenheim Classic</span>
+                        <span class="track-badge text-[11px] px-3 py-1.5 rounded-lg">Imola</span>
+                        <span class="track-badge text-[11px] px-3 py-1.5 rounded-lg">Oulton Park</span>
+                    </div>
+                </div>
+                
+                <div class="mb-4">
+                    <div class="text-xs font-semibold mb-2" style="color: var(--gold);">
+                        <i class="fas fa-car mr-1"></i> Ретро болиды
+                    </div>
+                    <div class="text-sm text-gray-300 space-y-1">
+                        <div>• Lotus 98T F1</div>
+                        <div>• McLaren F1 GTR</div>
+                        <div>• BMW M1 Procar</div>
+                    </div>
+                </div>
+                
+                <div class="rounded-lg p-3" style="background: rgba(212, 175, 55, 0.05);">
+                    <div class="text-xs font-semibold mb-1" style="color: var(--gold);">
+                        <i class="fas fa-wrench mr-1"></i> Сетап-совет
+                    </div>
+                    <p class="text-xs text-gray-400 leading-relaxed">
+                        Для исторических F1 машин отключаем все помощники и используем H-шифтер для максимального погружения.
+                    </p>
+                </div>
+                
+                <div class="flex items-center justify-between mt-4 pt-4 border-t border-gray-800">
+                    <div class="text-xs text-gray-500">
+                        <i class="fas fa-clock mr-1"></i> Лучшее время: 1:14.332
+                    </div>
+                    <div class="text-xs text-gray-500">
+                        <i class="fas fa-calendar mr-1"></i> Стрим: Ретро-четверг
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</main>
+
+<!-- Footer -->
+<footer class="px-4 py-8 mt-8" style="background: var(--black-soft); border-top: 1px solid rgba(212, 175, 55, 0.2);">
+    <div class="max-w-md mx-auto">
+        <div class="text-center mb-6">
+            <div class="inline-flex items-center gap-2 mb-3">
+                <div class="w-10 h-10 rounded-lg gold-border-gradient flex items-center justify-center">
+                    <i class="fas fa-flag-checkered text-xl" style="color: var(--gold);"></i>
+                </div>
+                <div>
+                    <div class="text-lg font-bold gold-gradient" data-shared-brand></div>
+                    <div class="text-[10px] text-gray-400" data-shared-author></div>
+                </div>
+            </div>
+            <p class="text-xs text-gray-400 leading-relaxed">
+                Профессиональные разборы гоночных симуляторов, сетапы от профи и онлайн заезды
+            </p>
+        </div>
+        
+        <div class="gold-divider my-6"></div>
+        
+        <div class="space-y-4 mb-6">
+            <div class="text-center">
+                <div class="text-sm font-semibold mb-3" style="color: var(--gold);">Навигация</div>
+                <div class="flex flex-col gap-2 text-sm">
+                    <a href="/public/main/" class="text-gray-400 py-2">Главная</a>
+                    <a href="/public/about/" class="text-gray-400 py-2">О канале</a>
+                    <a href="/public/games/" class="font-semibold py-2" style="color: var(--gold);">Игры</a>
+                    <a href="/public/team/" class="text-gray-400 py-2">Команда</a>
+                    <a href="/public/partners/" class="text-gray-400 py-2">Партнеры</a>
+                </div>
+            </div>
+        </div>
+        
+        <div class="gold-divider my-6"></div>
+        
+        <div class="text-center mb-6">
+            <div class="text-sm font-semibold mb-3" style="color: var(--gold);">Контакты</div>
+            <div class="space-y-2 text-sm text-gray-400">
+                <div>
+                    <i class="fas fa-envelope mr-2" style="color: var(--gold);"></i>
+                    contact@sitesotika.ru
+                </div>
+                <div>
+                    <i class="fab fa-telegram mr-2" style="color: var(--gold);"></i>
+                    @sitesotika
+                </div>
+                <div>
+                    <i class="fab fa-youtube mr-2" style="color: var(--gold);"></i>
+                    СайтСотика Official
+                </div>
+            </div>
+        </div>
+        
+        <div class="flex justify-center gap-4 mb-6">
+            <a href="#" class="w-11 h-11 flex items-center justify-center rounded-lg gold-border-gradient">
+                <i class="fab fa-youtube text-xl" style="color: var(--gold);"></i>
+            </a>
+            <a href="#" class="w-11 h-11 flex items-center justify-center rounded-lg gold-border-gradient">
+                <i class="fab fa-twitch text-xl" style="color: var(--gold);"></i>
+            </a>
+            <a href="#" class="w-11 h-11 flex items-center justify-center rounded-lg gold-border-gradient">
+                <i class="fab fa-telegram text-xl" style="color: var(--gold);"></i>
+            </a>
+            <a href="#" class="w-11 h-11 flex items-center justify-center rounded-lg gold-border-gradient">
+                <i class="fab fa-discord text-xl" style="color: var(--gold);"></i>
+            </a>
+        </div>
+        
+        <div class="gold-divider my-6"></div>
+        
+        <div class="text-center text-[11px] text-gray-500 space-y-1">
+            <div>© <span data-shared-year></span> <span data-shared-brand></span>. Все права защищены.</div>
+            <div><span data-shared-author></span></div>
+            <div class="flex justify-center gap-4 mt-2">
+                <a href="#" class="text-gray-500">Политика конфиденциальности</a>
+                <a href="#" class="text-gray-500">Правила</a>
+            </div>
+        </div>
+    </div>
+</footer>
+
+<script>
+    // Burger Menu
+    const burgerBtn = document.getElementById('burgerBtn');
+    const closeMenu = document.getElementById('closeMenu');
+    const mobileMenu = document.getElementById('mobileMenu');
+    const overlay = document.getElementById('overlay');
+    
+    function openMenu() {
+        mobileMenu.classList.add('active');
+        overlay.classList.remove('hidden');
+        burgerBtn.classList.add('burger-open');
+        document.body.style.overflow = 'hidden';
+    }
+    
+    function closeMenuHandler() {
+        mobileMenu.classList.remove('active');
+        overlay.classList.add('hidden');
+        burgerBtn.classList.remove('burger-open');
+        document.body.style.overflow = '';
+    }
+    
+    burgerBtn.addEventListener('click', openMenu);
+    closeMenu.addEventListener('click', closeMenuHandler);
+    overlay.addEventListener('click', closeMenuHandler);
+    
+    // Series Tabs
+    const seriesTabs = document.querySelectorAll('.series-tab');
+    const seriesContents = document.querySelectorAll('.series-content');
+    
+    seriesTabs.forEach(tab => {
+        tab.addEventListener('click', () => {
+            const series = tab.getAttribute('data-series');
+            
+            seriesTabs.forEach(t => t.classList.remove('active'));
+            tab.classList.add('active');
+            
+            seriesContents.forEach(content => {
+                content.classList.add('hidden');
+            });
+            
+            document.getElementById(series).classList.remove('hidden');
+            window.scrollTo({ top: document.getElementById(series).offsetTop - 120, behavior: 'smooth' });
+        });
+    });
+    
+    // Touch active states
+    document.querySelectorAll('.rich-card, .gold-border-gradient').forEach(el => {
+        el.addEventListener('touchstart', function() {
+            this.style.opacity = '0.8';
+        });
+        el.addEventListener('touchend', function() {
+            this.style.opacity = '1';
+        });
+    });
+</script>
+    <script src="/public/js/shared-data.js"></script>
+<script>(function(){document.addEventListener("click",function(e){var a=e.target.closest("[data-product-id]");if(!a)return;e.preventDefault();var pid=a.getAttribute("data-product-id");if(pid)parent.postMessage({type:"ecto-artifact-link-click",productId:pid},"*")})})();</script>
+</body>
+</html>

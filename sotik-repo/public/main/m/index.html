@@ -1,0 +1,606 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>СайтСотика - Дмитрий Передний | Премиальный стриминг</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;500;600;700;800&family=Playfair+Display:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+<style>
+    :root {
+        --bg-primary: #0A0A0A;
+        --bg-secondary: #111111;
+        --gold: #D4AF37;
+        --gold-light: #F0D571;
+        --gold-dark: #B8941F;
+        --gold-bright: #FFD700;
+    }
+    
+    * {
+        -webkit-tap-highlight-color: transparent;
+        box-sizing: border-box;
+    }
+    
+    html, body {
+        overflow-x: hidden;
+        width: 100%;
+        max-width: 100vw;
+    }
+    
+    body {
+        font-family: 'Manrope', sans-serif;
+        background-color: var(--bg-primary);
+        color: #E5E5E5;
+        min-height: 100vh;
+    }
+    
+    h1, h2, h3, h4, h5, h6 {
+        font-family: 'Playfair Display', serif;
+    }
+    
+    .gold-gradient {
+        background: linear-gradient(135deg, var(--gold-dark) 0%, var(--gold) 25%, var(--gold-light) 50%, var(--gold) 75%, var(--gold-dark) 100%);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+    }
+    
+    .gold-gradient-bg {
+        background: linear-gradient(135deg, var(--gold-dark) 0%, var(--gold) 25%, var(--gold-light) 50%, var(--gold) 75%, var(--gold-dark) 100%);
+    }
+    
+    .gold-border {
+        border: 1px solid rgba(212, 175, 55, 0.3);
+        box-shadow: 0 0 20px rgba(212, 175, 55, 0.1);
+    }
+    
+    .glass {
+        background: rgba(17, 17, 17, 0.7);
+        backdrop-filter: blur(12px);
+        -webkit-backdrop-filter: blur(12px);
+    }
+    
+    .tap-target {
+        min-height: 44px;
+        min-width: 44px;
+    }
+    
+    .btn-gold {
+        background: linear-gradient(135deg, var(--gold-dark) 0%, var(--gold) 50%, var(--gold-light) 100%);
+        color: var(--bg-primary);
+        font-weight: 600;
+        transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+    
+    .btn-gold:active {
+        transform: scale(0.97);
+        box-shadow: 0 0 30px rgba(212, 175, 55, 0.4);
+    }
+    
+    .card {
+        background: var(--bg-secondary);
+        border: 1px solid rgba(212, 175, 55, 0.2);
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+    
+    .card:active {
+        transform: translateY(-2px);
+        box-shadow: 0 8px 30px rgba(212, 175, 55, 0.15);
+    }
+    
+    .section-divider {
+        height: 1px;
+        background: linear-gradient(90deg, transparent 0%, var(--gold) 50%, transparent 100%);
+    }
+    
+    /* Burger Menu */
+    .burger-line {
+        width: 24px;
+        height: 2px;
+        background: var(--gold);
+        transition: all 0.3s ease;
+        transform-origin: center;
+    }
+    
+    .burger-active .burger-line:nth-child(1) {
+        transform: rotate(45deg) translateY(6px);
+    }
+    
+    .burger-active .burger-line:nth-child(2) {
+        opacity: 0;
+    }
+    
+    .burger-active .burger-line:nth-child(3) {
+        transform: rotate(-45deg) translateY(-6px);
+    }
+    
+    .mobile-menu {
+        transform: translateX(100%);
+        transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+    
+    .mobile-menu.active {
+        transform: translateX(0);
+    }
+    
+    .menu-overlay {
+        opacity: 0;
+        pointer-events: none;
+        transition: opacity 0.4s ease;
+    }
+    
+    .menu-overlay.active {
+        opacity: 1;
+        pointer-events: all;
+    }
+    
+    /* Animations */
+    @keyframes fadeInUp {
+        from {
+            opacity: 0;
+            transform: translateY(30px);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+    
+    .animate-fade-in {
+        animation: fadeInUp 0.6s ease forwards;
+    }
+    
+    .stat-number {
+        font-size: 2.5rem;
+        line-height: 1;
+        font-weight: 800;
+    }
+    
+    @media (max-width: 375px) {
+        .stat-number {
+            font-size: 2rem;
+        }
+    }
+</style>
+</head>
+<body>
+    <!-- Header with Burger Menu -->
+    <header class="fixed top-0 left-0 right-0 z-50 glass gold-border">
+        <nav class="px-4 py-4">
+            <div class="flex items-center justify-between">
+                <div class="flex items-center gap-2">
+                    <i class="fa-solid fa-crown text-xl gold-gradient"></i>
+                    <span class="text-lg font-bold gold-gradient" data-shared-brand></span>
+                </div>
+                <button id="burger-btn" class="tap-target flex flex-col justify-center items-center gap-1.5 p-2" aria-label="Меню">
+                    <span class="burger-line"></span>
+                    <span class="burger-line"></span>
+                    <span class="burger-line"></span>
+                </button>
+            </div>
+        </nav>
+    </header>
+    
+    <!-- Mobile Menu Overlay -->
+    <div id="menu-overlay" class="menu-overlay fixed inset-0 bg-black/80 z-40"></div>
+    
+    <!-- Slide-in Menu Panel -->
+    <div id="mobile-menu" class="mobile-menu fixed top-0 right-0 w-4/5 max-w-sm h-full bg-[var(--bg-primary)] z-50 gold-border border-l">
+        <div class="flex flex-col h-full px-6 py-6">
+            <div class="flex justify-between items-center mb-10">
+                <span class="text-xl font-bold gold-gradient">Навигация</span>
+                <button id="close-menu" class="tap-target p-2" aria-label="Закрыть">
+                    <i class="fa-solid fa-xmark text-2xl gold-gradient"></i>
+                </button>
+            </div>
+            <nav class="flex flex-col gap-2">
+                <a href="../../main/" class="menu-link tap-target flex items-center gap-3 px-4 py-4 rounded-lg gold-gradient-bg text-black font-semibold">
+                    <i class="fa-solid fa-house w-5"></i>Главная
+                </a>
+                <a href="../../about/" class="menu-link tap-target flex items-center gap-3 px-4 py-4 rounded-lg text-gray-300">
+                    <i class="fa-solid fa-user w-5 gold-gradient"></i>Обо мне
+                </a>
+                <a href="../../games/m/" class="menu-link tap-target flex items-center gap-3 px-4 py-4 rounded-lg text-gray-300">
+                    <i class="fa-solid fa-gamepad w-5 gold-gradient"></i>Игры
+                </a>
+                <a href="../../team/" class="menu-link tap-target flex items-center gap-3 px-4 py-4 rounded-lg text-gray-300">
+                    <i class="fa-solid fa-users w-5 gold-gradient"></i>Команда
+                </a>
+                <a href="../../partners/" class="menu-link tap-target flex items-center gap-3 px-4 py-4 rounded-lg text-gray-300">
+                    <i class="fa-solid fa-handshake w-5 gold-gradient"></i>Партнеры
+                </a>
+            </nav>
+            <div class="mt-auto pt-8">
+                <div class="section-divider mb-6"></div>
+                <div class="flex gap-4 justify-center">
+                    <a href="#" class="tap-target flex items-center justify-center w-11 h-11 rounded-full gold-border">
+                        <i class="fa-brands fa-twitch gold-gradient"></i>
+                    </a>
+                    <a href="#" class="tap-target flex items-center justify-center w-11 h-11 rounded-full gold-border">
+                        <i class="fa-brands fa-youtube gold-gradient"></i>
+                    </a>
+                    <a href="#" class="tap-target flex items-center justify-center w-11 h-11 rounded-full gold-border">
+                        <i class="fa-brands fa-telegram gold-gradient"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <main class="pt-16">
+        <!-- Hero Section -->
+        <section id="home" class="px-4 py-8">
+            <div class="flex flex-col items-center text-center gap-6">
+                <div class="relative w-48 h-48 rounded-full overflow-hidden gold-border">
+                    <div class="absolute inset-0 gold-gradient-bg opacity-20"></div>
+                    <img src="/public/images/about-portrait.png" alt="Дмитрий Передний" class="w-full h-full object-cover">
+                </div>
+                
+                <div class="space-y-4">
+                    <h1 class="text-4xl font-black leading-tight">
+                        <span class="gold-gradient" data-shared-author></span>
+                    </h1>
+                    <p class="text-base text-gray-300 leading-relaxed px-2">
+                        Профессиональный стример с ОВЗ, преодолевающий любые препятствия. Создаю контент, который вдохновляет и объединяет тысячи людей каждый день.
+                    </p>
+                </div>
+                
+                <button class="btn-gold tap-target w-full px-8 py-4 rounded-xl text-lg">
+                    <i class="fa-solid fa-play mr-2"></i>Смотреть стрим
+                </button>
+                
+                <!-- Stats -->
+                <div class="w-full grid grid-cols-1 gap-4 mt-6">
+                    <div class="card rounded-xl p-6 text-center">
+                        <div class="stat-number gold-gradient">250K+</div>
+                        <div class="text-sm text-gray-400 mt-2">Подписчиков</div>
+                    </div>
+                    <div class="card rounded-xl p-6 text-center">
+                        <div class="stat-number gold-gradient">5+</div>
+                        <div class="text-sm text-gray-400 mt-2">Лет в стриминге</div>
+                    </div>
+                    <div class="card rounded-xl p-6 text-center">
+                        <div class="stat-number gold-gradient">1000+</div>
+                        <div class="text-sm text-gray-400 mt-2">Стримов</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <div class="section-divider my-8"></div>
+
+        <!-- About Section -->
+        <section id="about" class="px-4 py-8">
+            <div class="space-y-4">
+                <h2 class="text-3xl font-bold gold-gradient text-center">Обо мне</h2>
+                <div class="card rounded-xl p-6 space-y-4">
+                    <p class="text-gray-300 leading-relaxed">
+                        Меня зовут Дмитрий Передний. Несмотря на ограничения по здоровью, я нашел свое призвание в стриминге и создании контента для сообщества.
+                    </p>
+                    <p class="text-gray-300 leading-relaxed">
+                        Каждый стрим — это возможность показать, что физические ограничения не определяют твои возможности. Моя миссия — вдохновлять людей и доказывать, что мечты достижимы.
+                    </p>
+                    <div class="flex items-start gap-3 pt-2">
+                        <i class="fa-solid fa-quote-left gold-gradient text-2xl mt-1"></i>
+                        <p class="text-gray-400 italic">
+                            "Невозможное существует только в голове. Каждый день мы доказываем, что вместе мы сильнее любых препятствий."
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <div class="section-divider my-8"></div>
+
+        <!-- Games Section -->
+        <section id="games" class="px-4 py-8">
+            <div class="space-y-6">
+                <div class="text-center space-y-2">
+                    <h2 class="text-3xl font-bold gold-gradient">Игры</h2>
+                    <p class="text-gray-400 text-sm">Контент, который я создаю для вас</p>
+                </div>
+                
+                <div class="space-y-4">
+                    <!-- Action & RPG -->
+                    <div class="card rounded-xl p-6">
+                        <div class="flex items-center gap-3 mb-3">
+                            <div class="w-12 h-12 rounded-lg gold-gradient-bg flex items-center justify-center">
+                                <i class="fa-solid fa-khanda text-black text-xl"></i>
+                            </div>
+                            <h3 class="text-xl font-bold gold-gradient">Action & RPG</h3>
+                        </div>
+                        <p class="text-gray-300 text-sm leading-relaxed">
+                            Эпические приключения в мирах фэнтези и сай-фай. Прохождения, билды, босс-файты и максимальный челлендж.
+                        </p>
+                        <div class="flex flex-wrap gap-2 mt-4">
+                            <span class="px-3 py-1.5 rounded-full text-xs gold-border text-gray-300">Elden Ring</span>
+                            <span class="px-3 py-1.5 rounded-full text-xs gold-border text-gray-300">Cyberpunk 2077</span>
+                            <span class="px-3 py-1.5 rounded-full text-xs gold-border text-gray-300">The Witcher 3</span>
+                        </div>
+                    </div>
+                    
+                    <!-- Стратегии -->
+                    <div class="card rounded-xl p-6">
+                        <div class="flex items-center gap-3 mb-3">
+                            <div class="w-12 h-12 rounded-lg gold-gradient-bg flex items-center justify-center">
+                                <i class="fa-solid fa-chess text-black text-xl"></i>
+                            </div>
+                            <h3 class="text-xl font-bold gold-gradient">Стратегии</h3>
+                        </div>
+                        <p class="text-gray-300 text-sm leading-relaxed">
+                            Тактика и стратегия в реальном времени. Глубокий анализ, планирование и доминирование над противником через интеллект.
+                        </p>
+                        <div class="flex flex-wrap gap-2 mt-4">
+                            <span class="px-3 py-1.5 rounded-full text-xs gold-border text-gray-300">Civilization VI</span>
+                            <span class="px-3 py-1.5 rounded-full text-xs gold-border text-gray-300">Age of Empires IV</span>
+                            <span class="px-3 py-1.5 rounded-full text-xs gold-border text-gray-300">Total War</span>
+                        </div>
+                    </div>
+                    
+                    <!-- Киберспорт -->
+                    <div class="card rounded-xl p-6">
+                        <div class="flex items-center gap-3 mb-3">
+                            <div class="w-12 h-12 rounded-lg gold-gradient-bg flex items-center justify-center">
+                                <i class="fa-solid fa-trophy text-black text-xl"></i>
+                            </div>
+                            <h3 class="text-xl font-bold gold-gradient">Киберспорт</h3>
+                        </div>
+                        <p class="text-gray-300 text-sm leading-relaxed">
+                            Соревновательный гейминг на высоком уровне. Турниры, рейтинговые матчи, обучение и разбор про-игроков.
+                        </p>
+                        <div class="flex flex-wrap gap-2 mt-4">
+                            <span class="px-3 py-1.5 rounded-full text-xs gold-border text-gray-300">Dota 2</span>
+                            <span class="px-3 py-1.5 rounded-full text-xs gold-border text-gray-300">CS2</span>
+                            <span class="px-3 py-1.5 rounded-full text-xs gold-border text-gray-300">Valorant</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <div class="section-divider my-8"></div>
+
+        <!-- Team Section -->
+        <section id="team" class="px-4 py-8">
+            <div class="space-y-6">
+                <div class="text-center space-y-2">
+                    <h2 class="text-3xl font-bold gold-gradient">Команда</h2>
+                    <p class="text-gray-400 text-sm">Люди, которые делают контент возможным</p>
+                </div>
+                
+                <div class="space-y-4">
+                    <div class="card rounded-xl p-6">
+                        <div class="flex items-center gap-4 mb-3">
+                            <div class="w-14 h-14 rounded-full gold-gradient-bg flex items-center justify-center flex-shrink-0">
+                                <i class="fa-solid fa-video text-black text-xl"></i>
+                            </div>
+                            <div>
+                                <h3 class="text-lg font-bold gold-gradient">Монтаж</h3>
+                                <p class="text-xs text-gray-500">Пост-продакшн</p>
+                            </div>
+                        </div>
+                        <p class="text-gray-300 text-sm leading-relaxed">
+                            Профессиональная команда монтажеров превращает часы стримов в увлекательные хайлайты и видео для YouTube.
+                        </p>
+                    </div>
+                    
+                    <div class="card rounded-xl p-6">
+                        <div class="flex items-center gap-4 mb-3">
+                            <div class="w-14 h-14 rounded-full gold-gradient-bg flex items-center justify-center flex-shrink-0">
+                                <i class="fa-solid fa-shield-halved text-black text-xl"></i>
+                            </div>
+                            <div>
+                                <h3 class="text-lg font-bold gold-gradient">Модерация</h3>
+                                <p class="text-xs text-gray-500">Комьюнити</p>
+                            </div>
+                        </div>
+                        <p class="text-gray-300 text-sm leading-relaxed">
+                            24/7 модераторы поддерживают дружелюбную атмосферу в чате и помогают новым зрителям освоиться.
+                        </p>
+                    </div>
+                    
+                    <div class="card rounded-xl p-6">
+                        <div class="flex items-center gap-4 mb-3">
+                            <div class="w-14 h-14 rounded-full gold-gradient-bg flex items-center justify-center flex-shrink-0">
+                                <i class="fa-solid fa-palette text-black text-xl"></i>
+                            </div>
+                            <div>
+                                <h3 class="text-lg font-bold gold-gradient">Дизайн</h3>
+                                <p class="text-xs text-gray-500">Визуал</p>
+                            </div>
+                        </div>
+                        <p class="text-gray-300 text-sm leading-relaxed">
+                            Креативная команда создает уникальный визуальный стиль: оверлеи, превью, мерч и все, что вы видите на стриме.
+                        </p>
+                    </div>
+                    
+                    <div class="card rounded-xl p-6">
+                        <div class="flex items-center gap-4 mb-3">
+                            <div class="w-14 h-14 rounded-full gold-gradient-bg flex items-center justify-center flex-shrink-0">
+                                <i class="fa-solid fa-bullhorn text-black text-xl"></i>
+                            </div>
+                            <div>
+                                <h3 class="text-lg font-bold gold-gradient">PR & SMM</h3>
+                                <p class="text-xs text-gray-500">Продвижение</p>
+                            </div>
+                        </div>
+                        <p class="text-gray-300 text-sm leading-relaxed">
+                            Отвечают за наши социальные сети, коллаборации с брендами и развитие сообщества за пределами стримов.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <div class="section-divider my-8"></div>
+
+        <!-- Partners Section -->
+        <section id="partners" class="px-4 py-8">
+            <div class="space-y-6">
+                <div class="text-center space-y-2">
+                    <h2 class="text-3xl font-bold gold-gradient">Партнеры</h2>
+                    <p class="text-gray-400 text-sm">Бренды, которые поддерживают нас</p>
+                </div>
+                
+                <div class="space-y-4">
+                    <div class="card rounded-xl p-6 text-center">
+                        <div class="w-16 h-16 rounded-xl gold-gradient-bg flex items-center justify-center mx-auto mb-3">
+                            <i class="fa-solid fa-keyboard text-black text-2xl"></i>
+                        </div>
+                        <h3 class="text-lg font-bold gold-gradient mb-2">HyperX</h3>
+                        <p class="text-gray-400 text-sm">Официальный партнер по периферии</p>
+                    </div>
+                    
+                    <div class="card rounded-xl p-6 text-center">
+                        <div class="w-16 h-16 rounded-xl gold-gradient-bg flex items-center justify-center mx-auto mb-3">
+                            <i class="fa-solid fa-microchip text-black text-2xl"></i>
+                        </div>
+                        <h3 class="text-lg font-bold gold-gradient mb-2">NVIDIA</h3>
+                        <p class="text-gray-400 text-sm">Технологический партнер</p>
+                    </div>
+                    
+                    <div class="card rounded-xl p-6 text-center">
+                        <div class="w-16 h-16 rounded-xl gold-gradient-bg flex items-center justify-center mx-auto mb-3">
+                            <i class="fa-solid fa-headset text-black text-2xl"></i>
+                        </div>
+                        <h3 class="text-lg font-bold gold-gradient mb-2">SteelSeries</h3>
+                        <p class="text-gray-400 text-sm">Аудио и устройства</p>
+                    </div>
+                    
+                    <div class="card rounded-xl p-6 text-center">
+                        <div class="w-16 h-16 rounded-xl gold-gradient-bg flex items-center justify-center mx-auto mb-3">
+                            <i class="fa-solid fa-chair text-black text-2xl"></i>
+                        </div>
+                        <h3 class="text-lg font-bold gold-gradient mb-2">DXRacer</h3>
+                        <p class="text-gray-400 text-sm">Игровые кресла</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <div class="section-divider my-8"></div>
+
+        <!-- CTA Section -->
+        <section class="px-4 py-8">
+            <div class="card rounded-xl p-6 text-center space-y-6">
+                <h2 class="text-2xl font-bold gold-gradient">Присоединяйся к сообществу</h2>
+                <p class="text-gray-300 text-sm leading-relaxed">
+                    Подписывайся на все платформы, чтобы не пропустить ни одного стрима и быть частью нашей большой семьи
+                </p>
+                <div class="space-y-3">
+                    <a href="#" class="btn-gold tap-target w-full flex items-center justify-center gap-3 px-6 py-4 rounded-xl">
+                        <i class="fa-brands fa-twitch text-xl"></i>
+                        <span>Twitch</span>
+                    </a>
+                    <a href="#" class="tap-target w-full flex items-center justify-center gap-3 px-6 py-4 rounded-xl gold-border text-gray-300">
+                        <i class="fa-brands fa-youtube text-xl gold-gradient"></i>
+                        <span>YouTube</span>
+                    </a>
+                    <a href="#" class="tap-target w-full flex items-center justify-center gap-3 px-6 py-4 rounded-xl gold-border text-gray-300">
+                        <i class="fa-brands fa-telegram text-xl gold-gradient"></i>
+                        <span>Telegram</span>
+                    </a>
+                    <a href="#" class="tap-target w-full flex items-center justify-center gap-3 px-6 py-4 rounded-xl gold-border text-gray-300">
+                        <i class="fa-brands fa-discord text-xl gold-gradient"></i>
+                        <span>Discord</span>
+                    </a>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="mt-12 px-4 pt-8 pb-6 border-t border-gray-800">
+        <div class="text-center space-y-6">
+            <div class="flex items-center justify-center gap-2">
+                <i class="fa-solid fa-crown text-xl gold-gradient"></i>
+                <span class="text-lg font-bold gold-gradient">СайтСотика</span>
+            </div>
+            
+            <div class="space-y-2 text-sm text-gray-400">
+                <p>Контакты</p>
+                <a href="mailto:contact@sotiksait.com" class="block gold-gradient">contact@sotiksait.com</a>
+                <p class="text-xs text-gray-500">По вопросам сотрудничества</p>
+            </div>
+            
+            <div class="section-divider"></div>
+            
+            <div class="space-y-2 text-xs text-gray-500">
+                <p>© <span data-shared-year></span> <span data-shared-brand></span> - <span data-shared-author></span></p>
+                <p>Все права защищены. Премиальный стриминг</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Burger Menu Functionality
+        const burgerBtn = document.getElementById('burger-btn');
+        const closeMenu = document.getElementById('close-menu');
+        const mobileMenu = document.getElementById('mobile-menu');
+        const menuOverlay = document.getElementById('menu-overlay');
+        const menuLinks = document.querySelectorAll('.menu-link');
+        
+        function openMenu() {
+            mobileMenu.classList.add('active');
+            menuOverlay.classList.add('active');
+            burgerBtn.classList.add('burger-active');
+            document.body.style.overflow = 'hidden';
+        }
+        
+        function closeMenuPanel() {
+            mobileMenu.classList.remove('active');
+            menuOverlay.classList.remove('active');
+            burgerBtn.classList.remove('burger-active');
+            document.body.style.overflow = '';
+        }
+        
+        burgerBtn.addEventListener('click', openMenu);
+        closeMenu.addEventListener('click', closeMenuPanel);
+        menuOverlay.addEventListener('click', closeMenuPanel);
+        
+        menuLinks.forEach(link => {
+            link.addEventListener('click', (e) => {
+                const target = link.getAttribute('href');
+                closeMenuPanel();
+                if (target && target.startsWith('#')) {
+                    e.preventDefault();
+                    setTimeout(() => {
+                        const element = document.querySelector(target);
+                        if (element) {
+                            const offset = 70;
+                            const elementPosition = element.getBoundingClientRect().top;
+                            const offsetPosition = elementPosition + window.pageYOffset - offset;
+                            window.scrollTo({
+                                top: offsetPosition,
+                                behavior: 'smooth'
+                            });
+                        }
+                    }, 300);
+                }
+            });
+        });
+        
+        // Prevent horizontal scroll
+        document.addEventListener('touchmove', function(e) {
+            if (mobileMenu.classList.contains('active')) {
+                e.preventDefault();
+            }
+        }, { passive: false });
+        
+        // Active state feedback for cards
+        document.querySelectorAll('.card, button, a').forEach(el => {
+            el.addEventListener('touchstart', function() {
+                this.style.opacity = '0.8';
+            });
+            el.addEventListener('touchend', function() {
+                setTimeout(() => {
+                    this.style.opacity = '1';
+                }, 150);
+            });
+        });
+    </script>
+    <script src="/public/js/shared-data.js"></script>
+<script>(function(){document.addEventListener("click",function(e){var a=e.target.closest("[data-product-id]");if(!a)return;e.preventDefault();var pid=a.getAttribute("data-product-id");if(pid)parent.postMessage({type:"ecto-artifact-link-click",productId:pid},"*")})})();</script>
+</body>
+</html>

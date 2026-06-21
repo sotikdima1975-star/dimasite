@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Команда FSB Racing | СайтСотика</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;500;600;700;800&family=Playfair+Display:wght@600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <style>
+        :root {
+            color-scheme: dark;
+            color: #fff;
+            background: #070707;
+        }
+        * {
+            box-sizing: border-box;
+            -webkit-tap-highlight-color: transparent;
+        }
+        body {
+            margin: 0;
+            font-family: 'Manrope', sans-serif;
+            background: #070707;
+            color: #F3F3F3;
+            min-height: 100vh;
+        }
+        .font-display {
+            font-family: 'Playfair Display', serif;
+        }
+        .gold-text {
+            color: #D4AF37;
+        }
+        .glass-card {
+            background: rgba(20, 20, 20, 0.82);
+            border: 1px solid rgba(212, 175, 55, 0.18);
+            backdrop-filter: blur(18px);
+            -webkit-backdrop-filter: blur(18px);
+        }
+        .nav-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+    </style>
+</head>
+<body class="antialiased">
+    <header class="fixed top-0 left-0 right-0 z-50 bg-[#0A0A0A]/95 backdrop-blur border-b border-[rgba(212,175,55,0.12)]">
+        <div class="max-w-xl mx-auto px-4 py-4 flex items-center justify-between">
+            <div>
+                <p class="text-sm text-[rgba(255,255,255,0.6)]">FSB Racing</p>
+                <h1 class="text-lg font-display font-bold">Команда СайтСотика</h1>
+            </div>
+            <button id="burgerBtn" class="inline-flex items-center justify-center w-11 h-11 rounded-2xl border border-[rgba(212,175,55,0.24)] text-[var(--gold)]">
+                <i class="fa-solid fa-bars"></i>
+            </button>
+        </div>
+        <nav id="mobileNav" class="hidden bg-[#090909] border-t border-[rgba(212,175,55,0.12)]">
+            <div class="max-w-xl mx-auto px-4 py-4 space-y-3">
+                <a href="/public/main/" class="nav-link rounded-2xl px-4 py-3 bg-[#111] text-sm text-white">Главная</a>
+                <a href="/public/about/" class="nav-link rounded-2xl px-4 py-3 bg-[#111] text-sm text-white">О нас</a>
+                <a href="/public/games/" class="nav-link rounded-2xl px-4 py-3 bg-[#111] text-sm text-white">Игры</a>
+                <a href="/public/team/" class="nav-link rounded-2xl px-4 py-3 bg-[#1E1B11] text-sm text-[var(--gold)]">Команда</a>
+                <a href="/public/partners/" class="nav-link rounded-2xl px-4 py-3 bg-[#111] text-sm text-white">Партнёры</a>
+            </div>
+        </nav>
+    </header>
+
+    <main class="pt-28 pb-10 max-w-xl mx-auto px-4">
+        <section class="mb-6">
+            <div class="rounded-[32px] bg-[#111] border border-[rgba(212,175,55,0.15)] p-5 shadow-[0_25px_80px_rgba(212,175,55,0.06)]">
+                <div class="mb-4">
+                    <span class="inline-flex items-center gap-2 rounded-full border border-[rgba(212,175,55,0.18)] bg-[rgba(212,175,55,0.08)] px-3 py-2 text-[0.75rem] uppercase tracking-[0.24em] text-[rgba(255,255,255,0.7)]">
+                        <i class="fa-solid fa-users text-[var(--gold)]"></i>
+                        Команда FSB Racing
+                    </span>
+                </div>
+                <h2 class="font-display text-3xl font-bold leading-tight mb-3">Пилоты и тренеры мобильного Team</h2>
+                <p class="text-sm text-[rgba(255,255,255,0.65)] leading-relaxed">Чёткая мобильная версия страницы команды, без лишнего «десктопного» оформления.</p>
+            </div>
+        </section>
+
+        <section class="space-y-5">
+            <article class="glass-card rounded-[28px] p-5">
+                <div class="flex items-start gap-4 mb-4">
+                    <div class="w-16 h-16 rounded-3xl bg-gradient-to-br from-[#B8941F] via-[#D4AF37] to-[#F0D571] flex items-center justify-center text-black font-bold">FS</div>
+                    <div>
+                        <p class="text-xs uppercase tracking-[0.2em] text-[rgba(255,255,255,0.55)]">FSB Sotik</p>
+                        <h3 class="text-xl font-bold">Алексей Сотников</h3>
+                        <p class="text-[var(--gold)] text-sm">Капитан команды</p>
+                    </div>
+                </div>
+                <div class="text-sm text-[rgba(255,255,255,0.75)] space-y-3">
+                    <p>Любимая игра: <span class="gold-text">Forza Motorsport 2023</span></p>
+                    <p>Любимая машина: <span class="gold-text">Porsche 911 GT3 RS 2023</span> • <span class="text-[rgba(255,255,255,0.65)]">S 800</span></p>
+                    <p>Стиль вождения: Агрессивный late-braking, endurance, трафик.</p>
+                </div>
+                <div class="mt-4 grid grid-cols-2 gap-3 text-xs text-[rgba(255,255,255,0.65)]">
+                    <div class="rounded-2xl bg-[rgba(255,255,255,0.04)] p-3">Часов в FM23<br><span class="text-white font-semibold">1,247ч</span></div>
+                    <div class="rounded-2xl bg-[rgba(255,255,255,0.04)] p-3">Победы в лигах<br><span class="text-[var(--gold)] font-semibold">47</span></div>
+                </div>
+            </article>
+
+            <article class="glass-card rounded-[28px] p-5">
+                <div class="flex items-start gap-4 mb-4">
+                    <div class="w-16 h-16 rounded-3xl bg-gradient-to-br from-[#F3C93A] via-[#D4AF37] to-[#B8941F] flex items-center justify-center text-black font-bold">SI</div>
+                    <div>
+                        <p class="text-xs uppercase tracking-[0.2em] text-[rgba(255,255,255,0.55)]">FSB Sensei</p>
+                        <h3 class="text-xl font-bold">Дмитрий Ковальчук</h3>
+                        <p class="text-[var(--gold)] text-sm">Наставник / Коуч</p>
+                    </div>
+                </div>
+                <div class="text-sm text-[rgba(255,255,255,0.75)] space-y-3">
+                    <p>Любимая игра: <span class="gold-text">Forza Motorsport 2023</span></p>
+                    <p>Любимая машина: <span class="gold-text">McLaren Senna GTR</span> • <span class="text-[rgba(255,255,255,0.65)]">R 890</span></p>
+                    <p>Стиль вождения: Прецизионный и чистый. Аналитик телеметрии.</p>
+                </div>
+                <div class="mt-4 grid grid-cols-2 gap-3 text-xs text-[rgba(255,255,255,0.65)]">
+                    <div class="rounded-2xl bg-[rgba(255,255,255,0.04)] p-3">Часов в FM23<br><span class="text-white font-semibold">2,156ч</span></div>
+                    <div class="rounded-2xl bg-[rgba(255,255,255,0.04)] p-3">Победы в лигах<br><span class="text-[var(--gold)] font-semibold">89</span></div>
+                </div>
+            </article>
+
+            <article class="glass-card rounded-[28px] p-5">
+                <div class="flex items-start gap-4 mb-4">
+                    <div class="w-16 h-16 rounded-3xl bg-gradient-to-br from-[#1A202C] via-[#0F172A] to-[#111827] flex items-center justify-center text-[#F7AB0A] font-bold">FT</div>
+                    <div>
+                        <p class="text-xs uppercase tracking-[0.2em] text-[rgba(255,255,255,0.55)]">FSB Forest</p>
+                        <h3 class="text-xl font-bold">Игорь Леснов</h3>
+                        <p class="text-[var(--gold)] text-sm">Спринтер / Квалификатор</p>
+                    </div>
+                </div>
+                <div class="text-sm text-[rgba(255,255,255,0.75)] space-y-3">
+                    <p>Любимая игра: <span class="gold-text">Forza Motorsport 2023</span></p>
+                    <p>Любимая машина: <span class="gold-text">Formula Mazda</span> • <span class="text-[rgba(255,255,255,0.65)]">P 950</span></p>
+                    <p>Стиль вождения: Эксплозивный старт и квалификации. Oak-wheel мастер.</p>
+                </div>
+                <div class="mt-4 grid grid-cols-2 gap-3 text-xs text-[rgba(255,255,255,0.65)]">
+                    <div class="rounded-2xl bg-[rgba(255,255,255,0.04)] p-3">Часов в FM23<br><span class="text-white font-semibold">892ч</span></div>
+                    <div class="rounded-2xl bg-[rgba(255,255,255,0.04)] p-3">Победы в лигах<br><span class="text-[var(--gold)] font-semibold">34</span></div>
+                </div>
+            </article>
+
+            <article class="glass-card rounded-[28px] p-5">
+                <div class="flex items-start gap-4 mb-4">
+                    <div class="w-16 h-16 rounded-3xl bg-gradient-to-br from-[#DF4F4F] via-[#D76D32] to-[#B8941F] flex items-center justify-center text-black font-bold">BF</div>
+                    <div>
+                        <p class="text-xs uppercase tracking-[0.2em] text-[rgba(255,255,255,0.55)]">FSB Bosfor</p>
+                        <h3 class="text-xl font-bold">Артем Босфоров</h3>
+                        <p class="text-[var(--gold)] text-sm">Дрифт / Универсал</p>
+                    </div>
+                </div>
+                <div class="text-sm text-[rgba(255,255,255,0.75)] space-y-3">
+                    <p>Любимая игра: <span class="gold-text">Forza Motorsport 2023</span></p>
+                    <p>Любимая машина: <span class="gold-text">Nissan Silvia S15</span> • <span class="text-[rgba(255,255,255,0.65)]">A 700</span></p>
+                    <p>Стиль вождения: Универсальный пилот, король дрифта и техники.</p>
+                </div>
+                <div class="mt-4 grid grid-cols-2 gap-3 text-xs text-[rgba(255,255,255,0.65)]">
+                    <div class="rounded-2xl bg-[rgba(255,255,255,0.04)] p-3">Часов в FM23<br><span class="text-white font-semibold">1,568ч</span></div>
+                    <div class="rounded-2xl bg-[rgba(255,255,255,0.04)] p-3">Победы в лигах<br><span class="text-[var(--gold)] font-semibold">28</span></div>
+                </div>
+            </article>
+        </section>
+
+        <footer class="mt-8 text-center text-[0.85rem] text-[rgba(255,255,255,0.55)]">
+            <p class="mb-2">© 2025 СайтСотика • FSB Racing</p>
+            <p>Мобильная версия страницы команды</p>
+        </footer>
+    </main>
+
+    <script>
+        const burgerBtn = document.getElementById('burgerBtn');
+        const mobileNav = document.getElementById('mobileNav');
+        burgerBtn.addEventListener('click', () => {
+            mobileNav.classList.toggle('hidden');
+        });
+    </script>
+</body>
+</html>

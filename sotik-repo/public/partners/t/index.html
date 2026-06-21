@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Партнеры | СайтСотика - Дмитрий Передний</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;500;600;700;800&family=Playfair+Display:wght@600;700;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <style>
+        :root {
+            --gold: #D4AF37;
+            --gold-light: #F0D571;
+            --gold-dark: #B8941F;
+            --gold-accent: #FFD700;
+            --black: #0A0A0A;
+        }
+        
+        * {
+            scroll-behavior: smooth;
+        }
+        
+        body {
+            font-family: 'Manrope', sans-serif;
+            background: var(--black);
+            color: #fff;
+            overflow-x: hidden;
+        }
+        
+        .gold-gradient {
+            background: linear-gradient(135deg, var(--gold-dark) 0%, var(--gold) 50%, var(--gold-light) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        
+        .gold-bg-gradient {
+            background: linear-gradient(135deg, var(--gold-dark) 0%, var(--gold) 50%, var(--gold-light) 100%);
+        }
+        
+        .gold-border-gradient {
+            border: 1px solid;
+            border-image: linear-gradient(135deg, var(--gold-dark), var(--gold), var(--gold-light)) 1;
+        }
+        
+        .glass-effect {
+            background: rgba(26, 26, 26, 0.8);
+            backdrop-filter: blur(24px);
+            border: 1px solid rgba(212, 175, 55, 0.15);
+        }
+        
+        .hero-glow {
+            position: absolute;
+            width: 900px;
+            height: 900px;
+            background: radial-gradient(circle, rgba(212, 175, 55, 0.2) 0%, transparent 70%);
+            filter: blur(100px);
+            pointer-events: none;
+        }
+        
+        .nav-link {
+            position: relative;
+        }
+        
+        .nav-link:hover {
+            color: var(--gold);
+        }
+        
+        .partner-card {
+            transition: all 0.3s ease;
+            background: rgba(26, 26, 26, 0.8);
+            border: 1px solid rgba(212, 175, 55, 0.1);
+        }
+        
+        .partner-card:hover {
+            transform: translateY(-5px);
+            border-color: rgba(212, 175, 55, 0.4);
+        }
+        
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .fade-in-up {
+            animation: fadeInUp 0.9s ease-out forwards;
+        }
+        
+        .divider-gold {
+            height: 1px;
+            background: linear-gradient(90deg, transparent, var(--gold), transparent);
+        }
+        
+        .text-shadow-gold {
+            text-shadow: 0 0 30px rgba(212, 175, 55, 0.5);
+        }
+    </style>
+</head>
+<body class="antialiased">
+
+<header class="fixed top-0 w-full z-50 glass-effect">
+    <nav class="max-w-[1400px] mx-auto px-6 py-5">
+        <div class="flex items-center justify-between">
+            <a href="/public/main/" class="flex items-center gap-3 group">
+                <div class="w-12 h-12 gold-bg-gradient rounded-xl flex items-center justify-center">
+                    <i class="fas fa-crown text-black text-2xl"></i>
+                </div>
+                <span class="font-display text-3xl font-bold">Сайт<span class="gold-gradient">Сотика</span></span>
+            </a>
+            
+            <div class="flex items-center gap-8">
+                <a href="/public/main/" class="nav-link text-sm font-semibold uppercase text-gray-400">Главная</a>
+                <a href="/public/about/" class="nav-link text-sm font-semibold uppercase text-gray-400">Обо мне</a>
+                <a href="/public/games/" class="nav-link text-sm font-semibold uppercase text-gray-400">Игры</a>
+                <a href="/public/team/" class="nav-link text-sm font-semibold uppercase text-gray-400">Команда</a>
+                <a href="/public/partners/" class="nav-link active text-sm font-semibold uppercase text-white">Партнеры</a>
+            </div>
+            
+            <a href="#contact" class="gold-bg-gradient text-black px-7 py-3 rounded-xl font-bold text-sm">
+                <i class="fas fa-paper-plane mr-2"></i>Связаться
+            </a>
+        </div>
+    </nav>
+</header>
+
+<section class="relative min-h-screen flex items-center pt-28 pb-16 overflow-hidden">
+    <div class="hero-glow -top-40 -left-40"></div>
+    <div class="hero-glow top-1/3 -right-40"></div>
+    
+    <div class="max-w-[1400px] mx-auto px-6 w-full relative z-10">
+        <div class="text-center mb-14 fade-in-up">
+            <div class="inline-flex items-center gap-3 gold-border-gradient px-5 py-2 rounded-full mb-8">
+                <i class="fas fa-handshake gold-gradient text-xl"></i>
+                <span class="text-xs tracking-[0.25em] uppercase text-gray-200 font-semibold">Партнеры</span>
+            </div>
+            
+            <h1 class="font-display text-6xl font-black mb-5 text-shadow-gold">
+                Наши <span class="gold-gradient">Партнеры</span>
+            </h1>
+            
+            <div class="divider-gold w-28 mx-auto mb-7"></div>
+            
+            <p class="text-gray-400 text-xl max-w-3xl mx-auto leading-relaxed">
+                Работаем с ведущими брендами игровой индустрии и технологий. Мы открыты к новым коллаборациям.
+            </p>
+        </div>
+
+        <div class="grid grid-cols-4 gap-6 mb-14">
+            <div class="partner-card p-8 rounded-2xl flex items-center justify-center h-36 hover:border-yellow-600/30 transition border border-transparent fade-in-up">
+                <div class="text-3xl font-black text-gray-700">PARTNER 1</div>
+            </div>
+            <div class="partner-card p-8 rounded-2xl flex items-center justify-center h-36 hover:border-yellow-600/30 transition border border-transparent fade-in-up">
+                <div class="text-3xl font-black text-gray-700">PARTNER 2</div>
+            </div>
+            <div class="partner-card p-8 rounded-2xl flex items-center justify-center h-36 hover:border-yellow-600/30 transition border border-transparent fade-in-up">
+                <div class="text-3xl font-black text-gray-700">PARTNER 3</div>
+            </div>
+            <div class="partner-card p-8 rounded-2xl flex items-center justify-center h-36 hover:border-yellow-600/30 transition border border-transparent fade-in-up">
+                <div class="text-3xl font-black text-gray-700">PARTNER 4</div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section id="contact" class="py-24 relative overflow-hidden">
+    <div class="absolute inset-0 bg-gradient-to-b from-transparent via-yellow-500/5 to-transparent"></div>
+    <div class="max-w-4xl mx-auto px-6 text-center relative z-10">
+        <div class="glass-effect rounded-2xl p-14 border-2" style="border-color: rgba(212, 175, 55, 0.3);">
+            <i class="fas fa-handshake text-6xl gold-gradient mb-8"></i>
+            <h2 class="font-display text-5xl font-black mb-7 text-shadow-gold">
+                Стать партнером <span class="gold-gradient">СайтСотики</span>
+            </h2>
+            <p class="text-gray-400 text-lg mb-10">
+                Мы открыты к новым коллаборациям! Если у тебя есть бренд, продукт или услугу — давай обсудим сотрудничество.
+            </p>
+            <a href="mailto:business@sitesotika.ru" class="gold-bg-gradient text-black px-9 py-4 rounded-xl font-bold text-lg inline-flex items-center gap-3">
+                <i class="fas fa-envelope mr-2"></i>
+                Связаться для сотрудничества
+            </a>
+        </div>
+    </div>
+</section>
+
+<footer class="border-t border-gray-900 pt-16 pb-10">
+    <div class="max-w-[1400px] mx-auto px-6">
+        <div class="grid grid-cols-4 gap-12 mb-14">
+            <div>
+                <div class="flex items-center gap-3 mb-8">
+                    <div class="w-12 h-12 gold-bg-gradient rounded-xl flex items-center justify-center">
+                        <i class="fas fa-crown text-black text-2xl"></i>
+                    </div>
+                    <span class="font-display text-3xl font-bold">Сайт<span class="gold-gradient">Сотика</span></span>
+                </div>
+                <p class="text-gray-500 text-sm leading-relaxed mb-8">
+                    Премиальный стриминг без границ.
+                </p>
+            </div>
+            
+            <div>
+                <h4 class="font-bold text-sm uppercase tracking-[0.2em] mb-8 gold-gradient">Навигация</h4>
+                <ul class="space-y-3">
+                    <li><a href="/public/main/" class="text-gray-500 hover:text-yellow-600 transition text-sm">Главная</a></li>
+                    <li><a href="/public/about/" class="text-gray-500 hover:text-yellow-600 transition text-sm">Обо мне</a></li>
+                    <li><a href="/public/games/" class="text-gray-500 hover:text-yellow-600 transition text-sm">Игры</a></li>
+                    <li><a href="/public/team/" class="text-gray-500 hover:text-yellow-600 transition text-sm">Команда</a></li>
+                </ul>
+            </div>
+            
+            <div>
+                <h4 class="font-bold text-sm uppercase tracking-[0.2em] mb-8 gold-gradient">Контент</h4>
+                <ul class="space-y-3">
+                    <li><a href="#" class="text-gray-500 hover:text-yellow-600 transition text-sm">Расписание</a></li>
+                    <li><a href="#" class="text-gray-500 hover:text-yellow-600 transition text-sm">Архив</a></li>
+                    <li><a href="#" class="text-gray-500 hover:text-yellow-600 transition text-sm">Хайlights</a></li>
+                </ul>
+            </div>
+            
+            <div>
+                <h4 class="font-bold text-sm uppercase tracking-[0.2em] mb-8 gold-gradient">Контакты</h4>
+                <ul class="space-y-4">
+                    <li class="flex items-start gap-4 text-sm">
+                        <i class="fas fa-envelope gold-gradient mt-1"></i>
+                        <div>
+                            <div class="text-gray-600 text-xs mb-1">Email</div>
+                            <span class="text-gray-400">contact@sitesotika.ru</span>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        
+        <div class="divider-gold mb-8"></div>
+        
+        <div class="flex items-center justify-between text-sm text-gray-600">
+            <p class="font-medium">© 2024 СайтСотика | Дмитрий Передний.</p>
+        </div>
+    </div>
+</footer>
+
+<script>
+    const observerOptions = {
+        threshold: 0.1,
+        rootMargin: '0px 0px -50px 0px'
+    };
+    
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.style.opacity = '1';
+                entry.target.style.transform = 'translateY(0)';
+            }
+        });
+    }, observerOptions);
+    
+    document.querySelectorAll('.fade-in-up, .partner-card').forEach(el => {
+        el.style.opacity = '0';
+        el.style.transform = 'translateY(20px)';
+        el.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+        observer.observe(el);
+    });
+</script>
+
+</body>
+</html>

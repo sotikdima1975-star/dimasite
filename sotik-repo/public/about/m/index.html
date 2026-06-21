@@ -1,0 +1,488 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Обо мне - СайтСотика | Дмитрий Передний</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;500;600;700;800&family=Playfair+Display:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+    :root {
+        --gold: #D4AF37;
+        --gold-light: #F0D571;
+        --gold-dark: #B8941F;
+        --gold-bright: #FFD700;
+        --black: #0A0A0A;
+        --black-light: #161616;
+        --black-medium: #1F1F1F;
+    }
+
+    * {
+        -webkit-tap-highlight-color: transparent;
+    }
+
+    body {
+        font-family: 'Manrope', sans-serif;
+        background: var(--black);
+        color: #fff;
+        overflow-x: hidden;
+    }
+
+    h1, h2, h3, h4 {
+        font-family: 'Playfair Display', serif;
+    }
+
+    .gold-gradient {
+        background: linear-gradient(135deg, var(--gold-dark) 0%, var(--gold) 25%, var(--gold-light) 50%, var(--gold) 75%, var(--gold-dark) 100%);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+    }
+
+    .gold-border-gradient {
+        position: relative;
+        border: 2px solid transparent;
+        background: linear-gradient(var(--black-medium), var(--black-medium)) padding-box,
+                    linear-gradient(135deg, var(--gold-dark), var(--gold), var(--gold-light), var(--gold), var(--gold-dark)) border-box;
+    }
+
+    .glass-effect {
+        background: rgba(22, 22, 22, 0.85);
+        backdrop-filter: blur(12px);
+        -webkit-backdrop-filter: blur(12px);
+        border: 1px solid rgba(212, 175, 55, 0.15);
+    }
+
+    .btn-gold {
+        background: linear-gradient(135deg, var(--gold-dark) 0%, var(--gold) 50%, var(--gold-light) 100%);
+        color: var(--black);
+        font-weight: 700;
+        transition: all 0.3s ease;
+        border: none;
+        min-height: 44px;
+        box-shadow: 0 4px 15px rgba(212, 175, 55, 0.25);
+    }
+
+    .btn-gold:active {
+        transform: scale(0.97);
+        box-shadow: 0 2px 8px rgba(212, 175, 55, 0.4);
+    }
+
+    .btn-outline-gold {
+        background: transparent;
+        border: 2px solid var(--gold);
+        color: var(--gold);
+        font-weight: 600;
+        min-height: 44px;
+        transition: all 0.3s ease;
+    }
+
+    .btn-outline-gold:active {
+        background: rgba(212, 175, 55, 0.1);
+        transform: scale(0.97);
+    }
+
+    .mobile-menu {
+        position: fixed;
+        top: 0;
+        right: -100%;
+        width: 80%;
+        max-width: 320px;
+        height: 100vh;
+        background: var(--black-light);
+        transition: right 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        z-index: 100;
+        box-shadow: -5px 0 25px rgba(0, 0, 0, 0.5);
+    }
+
+    .mobile-menu.active {
+        right: 0;
+    }
+
+    .menu-overlay {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100vh;
+        background: rgba(0, 0, 0, 0.7);
+        opacity: 0;
+        visibility: hidden;
+        transition: opacity 0.4s ease, visibility 0.4s ease;
+        z-index: 99;
+    }
+
+    .menu-overlay.active {
+        opacity: 1;
+        visibility: visible;
+    }
+
+    .burger-line {
+        width: 24px;
+        height: 2px;
+        background: var(--gold);
+        transition: all 0.3s ease;
+    }
+
+    .burger.active .burger-line:nth-child(1) {
+        transform: rotate(45deg) translate(5px, 5px);
+    }
+
+    .burger.active .burger-line:nth-child(2) {
+        opacity: 0;
+    }
+
+    .burger.active .burger-line:nth-child(3) {
+        transform: rotate(-45deg) translate(5px, -5px);
+    }
+
+    .nav-link {
+        position: relative;
+        color: #d1d5db;
+        font-weight: 500;
+        transition: color 0.3s ease;
+        min-height: 44px;
+        display: flex;
+        align-items: center;
+    }
+
+    .nav-link:active {
+        color: var(--gold-light);
+    }
+
+    .nav-link.active {
+        color: var(--gold);
+        font-weight: 600;
+    }
+
+    .nav-link.active::before {
+        content: '';
+        position: absolute;
+        left: -16px;
+        width: 3px;
+        height: 24px;
+        background: linear-gradient(180deg, var(--gold-dark), var(--gold-light));
+        border-radius: 2px;
+    }
+
+    .social-card:active {
+        background: rgba(212, 175, 55, 0.05);
+        border-color: var(--gold);
+    }
+
+    video {
+        object-fit: cover;
+        width: 100%;
+        height: 100%;
+    }
+
+    .video-overlay {
+        background: linear-gradient(180deg, transparent 0%, rgba(10, 10, 10, 0.4) 50%, rgba(10, 10, 10, 0.9) 100%);
+    }
+
+    html, body {
+        max-width: 100%;
+        overflow-x: hidden;
+    }
+</style>
+</head>
+<body>
+    <!-- Header with Burger Menu -->
+    <header class="fixed top-0 left-0 right-0 z-50 glass-effect">
+        <div class="px-4 py-4">
+            <div class="flex items-center justify-between">
+                <a href="../../main/" class="flex items-center gap-2">
+                    <i class="fa-solid fa-gamepad text-xl" style="color: var(--gold);"></i>
+                    <span class="text-lg font-bold" style="font-family: 'Playfair Display', serif;">
+                        <span class="gold-gradient" data-shared-brand></span>
+                    </span>
+                </a>
+                
+                <button id="burgerBtn" class="burger flex flex-col gap-1.5 p-2" aria-label="Меню">
+                    <span class="burger-line"></span>
+                    <span class="burger-line"></span>
+                    <span class="burger-line"></span>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Mobile Menu Overlay -->
+    <div id="menuOverlay" class="menu-overlay"></div>
+
+    <!-- Mobile Menu Panel -->
+    <nav id="mobileMenu" class="mobile-menu">
+        <div class="p-6 pt-20">
+            <div class="flex flex-col gap-2">
+                <a href="../../main/" class="nav-link px-4 py-3 rounded-lg">
+                    <i class="fa-solid fa-house w-6"></i>
+                    <span>Главная</span>
+                </a>
+                <a href="./" class="nav-link active px-4 py-3 rounded-lg">
+                    <i class="fa-solid fa-user w-6"></i>
+                    <span>Обо мне</span>
+                </a>
+                <a href="../../games/m/" class="nav-link px-4 py-3 rounded-lg">
+                    <i class="fa-solid fa-dice w-6"></i>
+                    <span>Игры</span>
+                </a>
+                <a href="../../team/" class="nav-link px-4 py-3 rounded-lg">
+                    <i class="fa-solid fa-users w-6"></i>
+                    <span>Команда</span>
+                </a>
+                <a href="../../partners/" class="nav-link px-4 py-3 rounded-lg">
+                    <i class="fa-solid fa-handshake w-6"></i>
+                    <span>Партнеры</span>
+                </a>
+            </div>
+
+            <div class="mt-8 pt-8 border-t border-gray-800">
+                <p class="text-sm text-gray-500 mb-4">Подпишись на меня</p>
+                <div class="flex gap-3">
+                    <a href="https://twitch.tv" class="w-10 h-10 flex items-center justify-center rounded-lg bg-gray-800 text-gray-400 active:text-purple-400">
+                        <i class="fa-brands fa-twitch"></i>
+                    </a>
+                    <a href="https://youtube.com" class="w-10 h-10 flex items-center justify-center rounded-lg bg-gray-800 text-gray-400 active:text-red-500">
+                        <i class="fa-brands fa-youtube"></i>
+                    </a>
+                    <a href="https://t.me" class="w-10 h-10 flex items-center justify-center rounded-lg bg-gray-800 text-gray-400 active:text-blue-400">
+                        <i class="fa-brands fa-telegram"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="pt-16">
+        <!-- Hero Section with Video -->
+        <section class="relative">
+            <div class="relative w-full h-[400px] overflow-hidden">
+                <video 
+                    class="absolute inset-0 w-full h-full"
+                    autoplay 
+                    muted 
+                    loop 
+                    playsinline
+                    poster="/public/images/about-portrait.jpg">
+                    <source src="/public/images/about-portrait.mp4" type="video/mp4">
+                </video>
+                <div class="absolute inset-0 video-overlay"></div>
+            </div>
+
+            <!-- Text Content -->
+            <div class="px-5 -mt-20 relative z-10">
+                <div class="glass-effect rounded-2xl p-6 gold-border-gradient">
+                    <div class="mb-6">
+                        <h1 class="text-4xl font-bold mb-2">
+                            <span class="gold-gradient" data-shared-author></span>
+                        </h1>
+                        <p class="text-lg text-gray-300 font-medium">Стример с ограниченными возможностями</p>
+                    </div>
+
+                    <div class="space-y-4 text-gray-300 leading-relaxed">
+                        <p>Привет! Меня зовут Дима, я стример с ДЦП и эпилепсией. Несмотря на физические ограничения, я нашел свое призвание в играх и стриминге.</p>
+                        
+                        <p>На канале СайтСотика я делюсь своим игровым опытом, общаюсь с аудиторией и показываю, что любые преграды можно преодолеть. Играю в самые разные жанры — от RPG до стратегий.</p>
+                        
+                        <p>Моя цель — вдохновить людей не сдаваться и идти к своей мечте, какой бы она ни была. Присоединяйся к нашему комьюнити!</p>
+                    </div>
+
+                    <div class="mt-6 pt-6 border-t border-gray-800">
+                        <div class="grid grid-cols-3 gap-4 text-center">
+                            <div>
+                                <div class="text-2xl font-bold gold-gradient">5+</div>
+                                <div class="text-xs text-gray-500 mt-1">лет стриминга</div>
+                            </div>
+                            <div>
+                                <div class="text-2xl font-bold gold-gradient">50K+</div>
+                                <div class="text-xs text-gray-500 mt-1">подписчиков</div>
+                            </div>
+                            <div>
+                                <div class="text-2xl font-bold gold-gradient">1000+</div>
+                                <div class="text-xs text-gray-500 mt-1">стримов</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Social Buttons Section -->
+        <section class="px-5 py-8">
+            <h2 class="text-2xl font-bold mb-6 text-center">
+                <span class="gold-gradient">Мои платформы</span>
+            </h2>
+            
+            <div class="flex flex-col gap-3">
+                <a href="https://twitch.tv" class="social-card btn-gold w-full py-4 px-6 rounded-xl flex items-center justify-center gap-3 text-base">
+                    <i class="fa-brands fa-twitch text-xl"></i>
+                    <span>Смотреть на Twitch</span>
+                </a>
+                
+                <a href="https://youtube.com" class="social-card btn-outline-gold w-full py-4 px-6 rounded-xl flex items-center justify-center gap-3 text-base">
+                    <i class="fa-brands fa-youtube text-xl"></i>
+                    <span>YouTube канал</span>
+                </a>
+                
+                <a href="https://t.me" class="social-card btn-outline-gold w-full py-4 px-6 rounded-xl flex items-center justify-center gap-3 text-base">
+                    <i class="fa-brands fa-telegram text-xl"></i>
+                    <span>Telegram</span>
+                </a>
+                
+                <a href="https://boosty.to" class="social-card btn-outline-gold w-full py-4 px-6 rounded-xl flex items-center justify-center gap-3 text-base">
+                    <i class="fa-solid fa-heart text-xl"></i>
+                    <span>Поддержать на Boosty</span>
+                </a>
+            </div>
+        </section>
+
+        <!-- Story Section -->
+        <section class="px-5 pb-8">
+            <div class="glass-effect rounded-2xl p-6">
+                <h3 class="text-2xl font-bold mb-4">
+                    <span class="gold-gradient">Моя история</span>
+                </h3>
+                <div class="space-y-4 text-gray-400 text-sm leading-relaxed">
+                    <p>С детства я увлекался компьютерными играми. Они стали для меня окном в мир безграничных возможностей, где физические ограничения не имеют значения.</p>
+                    <p>В 2019 году я решил попробовать себя в стриминге. Первые эфиры смотрели всего 2-3 человека, но я не сдавался. Постепенно аудитория росла, и люди начали ценить не только мой игровой скилл, но и позитивную атмосферу на стримах.</p>
+                    <p>Сегодня СайтСотика — это большое дружное комьюнити, где каждый чувствует себя как дома. Мы вместе играем, общаемся и поддерживаем друг друга.</p>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-black border-t border-gray-900">
+        <div class="px-5 py-10">
+            <div class="flex flex-col gap-8">
+                <!-- Column 1: About -->
+                <div>
+                    <div class="flex items-center gap-2 mb-4">
+                        <i class="fa-solid fa-gamepad text-xl" style="color: var(--gold);"></i>
+                        <span class="text-xl font-bold" style="font-family: 'Playfair Display', serif;">
+                            <span class="gold-gradient">СайтСотика</span>
+                        </span>
+                    </div>
+                    <p class="text-gray-500 text-sm leading-relaxed">
+                        Стример с ограниченными возможностями, который доказывает что игры доступны каждому.
+                    </p>
+                </div>
+
+                <!-- Column 2: Navigation -->
+                <div>
+                    <h4 class="text-base font-bold mb-4 text-white">Навигация</h4>
+                    <ul class="space-y-3">
+                        <li><a href="../../main/" class="text-gray-500 active:text-gold text-sm">Главная</a></li>
+                        <li><a href="./" class="text-gold text-sm font-medium">Обо мне</a></li>
+                        <li><a href="../../games/m/" class="text-gray-500 active:text-gold text-sm">Игры</a></li>
+                        <li><a href="../../team/" class="text-gray-500 active:text-gold text-sm">Команда</a></li>
+                        <li><a href="../../partners/" class="text-gray-500 active:text-gold text-sm">Партнеры</a></li>
+                    </ul>
+                </div>
+
+                <!-- Column 3: Social -->
+                <div>
+                    <h4 class="text-base font-bold mb-4 text-white">Соцсети</h4>
+                    <ul class="space-y-3">
+                        <li>
+                            <a href="https://twitch.tv" class="text-gray-500 active:text-purple-400 text-sm flex items-center gap-2">
+                                <i class="fa-brands fa-twitch w-4"></i>
+                                <span>Twitch</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="https://youtube.com" class="text-gray-500 active:text-red-500 text-sm flex items-center gap-2">
+                                <i class="fa-brands fa-youtube w-4"></i>
+                                <span>YouTube</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="https://t.me" class="text-gray-500 active:text-blue-400 text-sm flex items-center gap-2">
+                                <i class="fa-brands fa-telegram w-4"></i>
+                                <span>Telegram</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="https://boosty.to" class="text-gray-500 active:text-orange-400 text-sm flex items-center gap-2">
+                                <i class="fa-solid fa-heart w-4"></i>
+                                <span>Boosty</span>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+
+                <!-- Column 4: Contact -->
+                <div>
+                    <h4 class="text-base font-bold mb-4 text-white">Контакты</h4>
+                    <ul class="space-y-3">
+                        <li>
+                            <a href="mailto:contact@sitesotika.ru" class="text-gray-500 active:text-gold text-sm flex items-center gap-2">
+                                <i class="fa-solid fa-envelope w-4"></i>
+                                <span>contact@sitesotika.ru</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#" class="text-gray-500 active:text-gold text-sm flex items-center gap-2">
+                                <i class="fa-solid fa-circle-question w-4"></i>
+                                <span>FAQ</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#" class="text-gray-500 active:text-gold text-sm flex items-center gap-2">
+                                <i class="fa-solid fa-shield-halved w-4"></i>
+                                <span>Правила сообщества</span>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="mt-10 pt-6 border-t border-gray-900 text-center">
+                <p class="text-gray-600 text-xs">© <span data-shared-year></span> <span data-shared-brand></span>. Все права защищены.</p>
+                <p class="text-gray-700 text-xs mt-2">Сделано с <i class="fa-solid fa-heart text-red-500"></i> для комьюнити</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Burger Menu Logic
+        const burgerBtn = document.getElementById('burgerBtn');
+        const mobileMenu = document.getElementById('mobileMenu');
+        const menuOverlay = document.getElementById('menuOverlay');
+        const body = document.body;
+
+        function toggleMenu() {
+            burgerBtn.classList.toggle('active');
+            mobileMenu.classList.toggle('active');
+            menuOverlay.classList.toggle('active');
+            body.style.overflow = mobileMenu.classList.contains('active') ? 'hidden' : '';
+        }
+
+        burgerBtn.addEventListener('click', toggleMenu);
+        menuOverlay.addEventListener('click', toggleMenu);
+
+        // Close menu on link click
+        const navLinks = document.querySelectorAll('.nav-link');
+        navLinks.forEach(link => {
+            link.addEventListener('click', () => {
+                if (mobileMenu.classList.contains('active')) {
+                    toggleMenu();
+                }
+            });
+        });
+
+        // Prevent horizontal scroll on touch devices
+        document.addEventListener('touchmove', function(e) {
+            if (mobileMenu.classList.contains('active')) {
+                e.preventDefault();
+            }
+        }, { passive: false });
+    </script>
+    <script src="/public/js/shared-data.js"></script>
+<script>(function(){document.addEventListener("click",function(e){var a=e.target.closest("[data-product-id]");if(!a)return;e.preventDefault();var pid=a.getAttribute("data-product-id");if(pid)parent.postMessage({type:"ecto-artifact-link-click",productId:pid},"*")})})();</script>
+</body>
+</html>

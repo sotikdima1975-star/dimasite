@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Перенаправление...</title>
+    <script>
+        (function() {
+            var ua = navigator.userAgent.toLowerCase();
+            var isMobile = /mobile|iphone|ipod|android.*mobile|windows phone/i.test(ua);
+            var isTablet = /(tablet|ipad|playbook|silk)|(android(?!.*mobile))/i.test(ua);
+
+            if (isTablet) {
+                window.location.replace('/public/main/t/');
+            } else if (isMobile) {
+                window.location.replace('/public/main/m/');
+            } else {
+                window.location.replace('/public/main/d/');
+            }
+        })();
+    </script>
+</head>
+<body>
+    <p>Перенаправление...</p>
+</body>
+</html>
